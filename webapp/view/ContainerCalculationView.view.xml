@@ -1,0 +1,166 @@
+<mvc:View
+    controllerName="containercalculation.controller.ContainerCalculationView"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns="sap.m"
+    xmlns:mdc="sap.ui.mdc"
+    xmlns:mdct="sap.ui.mdc.table"
+    displayBlock="true"
+    height="100%">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <Panel>
+                <l:HorizontalLayout class="sapUiContentPadding">
+                    <l:VerticalLayout>
+                        <Label text="Ordem Mestre" labelFor="cb_master_order" />
+                        <ComboBox
+                            id="cb_master_order"
+                            showSecondaryValues="true"
+                            items="{ path: '/ZGKPP_DD_CONTAINER_CALC', sorter: { path: 'MasterProductionOrder', descending: false } }">
+                            <core:ListItem key="{key}" text="{MasterProductionOrder}" />
+                        </ComboBox>
+                    </l:VerticalLayout>
+                    <l:VerticalLayout>
+                        <Label />
+                        <Button type="Emphasized" text="Iniciar" press="onSearch">
+                            <layoutData>
+                                <FlexItemData growFactor="1" />
+                            </layoutData>
+                        </Button>
+                    </l:VerticalLayout>
+                </l:HorizontalLayout>
+            </Panel>
+            <IconTabBar expandable="false" showAllCloseButtons="false">
+                <items>
+                    <IconTabFilter text="Dados gerais">
+                        <Panel>
+                            <content>
+                                <l:HorizontalLayout class="sapUiContentPadding">
+                                    <l:VerticalLayout>
+                                        <Label text="Ordem Mestre:" labelFor="data_overview_master_order_text" />
+                                        <Text id="data_overview_master_order_text" text="{masterOrderData>/MasterProductionOrder}" />
+                                    </l:VerticalLayout>
+                                    <l:VerticalLayout>
+                                        <Label text="Material:" labelFor="data_overview_material_text" />
+                                        <Text id="data_overview_material_text" text="{masterOrderData>/Material}" />
+                                    </l:VerticalLayout>
+                                </l:HorizontalLayout>
+                            </content>
+                        </Panel>
+                    </IconTabFilter>
+                    <IconTabFilter text="Capacidade das caixas">
+                        <Panel>
+                            <content>
+                                <Table id="box_capacity_table" items="{ path: 'cadCaixasModel>/' }" inset="false">
+                                    <columns>
+                                        <Column id="column_caixa">
+                                            <FormattedText text="Caixa" class="blueBoldLabel" />
+                                        </Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem vAlign="Middle">
+                                            <cells>
+                                                <Text text="{cadCaixasModel>Caixa}" />
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </content>
+                        </Panel>
+                    </IconTabFilter>
+                    <IconTabFilter text="Geração de UCs - Manual">
+                        <Panel>
+                            <headerToolbar>
+                                <Toolbar>
+                                    <ToolbarSpacer id="manualUcGenerationItemsHeader" />
+                                    <Button id="manual_uc_generation_btn_generate" text="Gerar"
+                                        press="_runManualUcGeneration" type="Emphasized" />
+                                    <Button id="manual_uc_generation_btn_remove" text="Excluir"
+                                        press="_removeRowsFromManualUcGenerator" />
+                                    <Text text='|' width=".1%" />
+                                    <Button id="manual_uc_generation_btn_add" text="Incluir"
+                                        press="_addRowToManualUcGenerator" />
+                                    <Button id="manual_uc_generation_btn_print" text="Imprimir"
+                                        press="_printManuallyGeneratedUcs" />
+                                </Toolbar>
+                            </headerToolbar>
+                            <content>
+                                <Table id="manual_uc_generation_table" items="{ path: 'ucManualModel>/' }" inset="false" fixedLayout="false">
+                                    <columns>
+                                        <Column id="manual_uc_column_record_selected" />
+                                        <Column id="manual_uc_column_pecas_caixa">
+                                            <Text text="Peças por caixa" />
+                                        </Column>
+                                        <Column id="manual_uc_column_uc_manual_caixa">
+                                            <Text text="Caixa" />
+                                        </Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem vAlign="Middle">
+                                            <cells>
+                                                <Input value="{ucManualModel>UnitsPerBox}" />
+                                                <Input value="{ucManualModel>Box}" />
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </content>
+                        </Panel>
+                    </IconTabFilter>
+                    <IconTabFilter text="Geração de UCs - Automática">
+                        <Panel>
+                            <headerToolbar>
+                                <Toolbar>
+                                    <ToolbarSpacer id="automatic_uc_generation_items_header" />
+                                    <Button id="automatic_uc_generation_btn_generate"
+                                        text="Gerar UCs"
+                                        type="Emphasized" />
+                                    <Text text='|' width=".1%" />
+                                    <Button id="automatic_uc_generation_btn_change_boxes"
+                                        text="Alterar Caixas" />
+                                    <ComboBox id="automatic_uc_generation_cbb_sizes" />
+                                    <Button id="automatic_uc_generation_btn_recalculate"
+                                        text="Recalcular Torres" />
+                                    <Button id="automatic_uc_generation_btn_print"
+                                        text="Imprimir UCs" />
+                                    <Button id="automatic_uc_generation_btn_remove" text="Excluir" />
+                                    <Button id="automatic_uc_generation_btn_save" text="Salvar"
+                                        type="Emphasized" />
+                                </Toolbar>
+                            </headerToolbar>
+                            <content>
+                                <Table>
+                                    <columns>
+                                        <Column id="automatic_uc_generation_checked" />
+                                        <Column id="automatic_uc_generation_commercial_unit" />
+                                        <Column id="automatic_uc_generation_production_order" />
+                                        <Column id="automatic_uc_generation_material" />
+                                        <Column id="automatic_uc_generation_material_color" />
+                                        <Column id="automatic_uc_generation_box_size" />
+                                        <Column id="automatic_uc_generation_size" />
+                                        <Column id="automatic_uc_generation_size_sequence" />
+                                        <Column id="automatic_uc_generation_generated_quantity" />
+                                        <Column id="automatic_uc_generation_ideal_quantity" />
+                                        <Column id="automatic_uc_generation_towers" />
+                                    </columns>
+                                </Table>
+                            </content>
+                        </Panel>
+                    </IconTabFilter>
+                    <IconTabFilter text="Conferência de Quantidades">
+                        <Panel>
+                            <content>
+                                <Table id="quantity_check_table" inset="false">
+                                    <columns>
+                                        <Column id="column_quantity_check_item"/>
+                                    </columns>
+                                </Table>
+                            </content>
+                        </Panel>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>
