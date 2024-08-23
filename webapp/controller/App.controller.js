@@ -6,8 +6,7 @@ sap.ui.define(
       "use strict";
   
       return BaseController.extend("containercalculation.controller.App", {
-        onInit: function() {
-        }
+        onInit: function() { }
       });
     }
   );

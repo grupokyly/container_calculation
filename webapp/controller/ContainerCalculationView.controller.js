@@ -76,11 +76,11 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
-                        $select: 'to_Boxes/MaterialSize,to_Boxes/Box'
+                        $select: 'to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/Box'
                     },
 
                     success: function (data) {
-                        const sizes = data.results[0]?.to_Boxes?.results?.map((box) => box.MaterialSize)?.sort();
+                        const sizes = data.results[0]?.to_Boxes?.results?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize);
                         if (!sizes || sizes.length === 0) {
                             MessageToast.show('Não foram encontradas caixas para a ordem mestre informada.');
                             return;
@@ -90,6 +90,7 @@ sap.ui.define([
                             table.addColumn(new sap.m.Column({
                                 header: new sap.m.Text({ text: size.trim() }),
                                 width: 'auto',
+                                hAlign: 'Center'
                             }));
                         });
 
@@ -114,11 +115,11 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
-                        $select: 'to_Boxes/MaterialSize,to_Boxes/Box,to_Boxes/BoxDescription,to_Boxes/Quantity'
+                        $select: 'to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/Box,to_Boxes/BoxDescription,to_Boxes/Quantity'
                     },
 
                     success: function (data) {
-                        const boxes = [...new Set(data.results[0]?.to_Boxes?.results?.map(it => it.Box) ?? [])];
+                        const boxes = [...new Set(data.results[0]?.to_Boxes?.results?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map(it => it.Box) ?? [])];
                         const rows = [...boxes.map(box => {
                             const row = { Caixa: data.results[0]?.to_Boxes?.results?.find(it => it.Box === box)?.BoxDescription?.trim() ?? '' };
                             (data.results[0]?.to_Boxes?.results?.filter(it => it.Box === box) ?? []).forEach(it => {
@@ -145,17 +146,18 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
-                        $select: 'to_Boxes/MaterialSize,to_Boxes/Box,to_Boxes/BoxDescription'
+                        $select: 'to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/Box,to_Boxes/BoxDescription'
                     },
 
                     success: function (data) {
-                        const sizes = data.results[0]?.to_Boxes?.results?.map((box) => box.MaterialSize)?.sort();
+                        const sizes = data.results[0]?.to_Boxes?.results?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize);
                         if (!sizes || sizes.length === 0) return;
 
                         sizes.forEach((size) => {
                             table.addColumn(new sap.m.Column({
                                 header: new sap.m.Text({ text: size.trim() }),
                                 width: 'auto',
+                                hAlign: 'Center'
                             }));
                         });
 
@@ -207,15 +209,18 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
-                        $select: 'to_Boxes/MaterialSize,to_Boxes/Box'
+                        $select: 'to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/SizeOrder,to_Boxes/Box'
                     },
 
                     success: function (data) {
-                        const sizes = [...new Set(data.results[0]?.to_Boxes?.results?.map((box) => box.MaterialSize)?.sort())];
+                        const sizes = [...new Set(data.results[0]?.to_Boxes?.results?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize))];
                         if (!sizes || sizes.length === 0) return;
                         
                         const newRow = { UnitsPerBox: 0, RecordSelected: false };
-                        sizes.forEach(it => newRow[`UcManualGenerationSize_${it}`] = '0');
+                        sizes.forEach(it => {
+                            newRow[`UcManualGenerationSize_${it}`] = '0'
+                            newRow[`UcManualGenerationSizeOrder_${it}`] = data.results[0]?.to_Boxes?.results?.find((box) => box.MaterialSize === it)?.SizeOrder;
+                        });
                         
                         const ucManualModel = view.getModel('ucManualModel').getData();
                         view.setModel(new JSONModel(Array.isArray(ucManualModel) ? [...ucManualModel, newRow] : [newRow]), 'ucManualModel');
@@ -244,17 +249,18 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
-                        $select: 'to_Boxes/MaterialSize,to_Boxes/Box,to_Boxes/BoxDescription,to_Boxes/Quantity'
+                        $select: 'to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/Box,to_Boxes/BoxDescription,to_Boxes/Quantity'
                     },
 
                     success: function (data) {
-                        const sizes = [...new Set(data.results[0]?.to_Boxes?.results?.map((box) => box.MaterialSize)?.sort())];
+                        const sizes = [...new Set(data.results[0]?.to_Boxes?.results?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize))];
                         if (!sizes || sizes.length === 0) return;
 
                         sizes.forEach((size) => {
                             table.addColumn(new sap.m.Column({
                                 header: new sap.m.Text({ text: size.trim() }),
                                 width: 'auto',
+                                hAlign: 'Center'
                             }));
                         });
 
@@ -279,11 +285,11 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
-                        $select: 'to_Boxes/MaterialSize'
+                        $select: 'to_Boxes/MaterialSize,to_Boxes/SizeOrder'
                     },
 
                     success: function (data) {
-                        const sizes = [...new Set(data.results[0]?.to_Boxes?.results?.map((box) => box.MaterialSize)?.sort())];
+                        const sizes = [...new Set(data.results[0]?.to_Boxes?.results?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize))];
                         const rows = [{ Item: "Quantidade da ordem" }, { Item: "Quantidade gerada" }, { Item: "Saldo" }];
                         rows.forEach((row) => {
                             sizes.forEach((size) => {
@@ -302,6 +308,12 @@ sap.ui.define([
                 const items = (view.getModel('ucManualModel')?.getData() ?? []);
                 if (!data || items.length == 0) return;
 
+                const v4model = new sap.ui.model.odata.v4.ODataModel({
+                    serviceUrl: 'https://s4dev2.grupokyly.com/sap/opu/odata4/sap/ZGKPP_DD_CONTAINER_CALC_SRV/srvd_a2x/sap/ZGKPP_DD_CONTAINER_CALC_SRV/0001/',
+                    synchronizationMode: 'None',
+                });
+                console.log(v4model);
+
                 const payload = ({
                     PackagingMaterial: data.Material.trim(),
                     Plant: '1000', // Fixed
@@ -310,19 +322,39 @@ sap.ui.define([
 
                 items.forEach(item => {
                     for (var prop in item) {
-                        if (prop.startsWith('UcManualGenerationSize_') && Number(item[prop]) > 0) {
+                        if (prop.startsWith('UcManualGenerationSize_')) {
                             payload._HandlingUnitItem.push({
                                 Material: item.Box?.trim(),
-                                HandlingUnitQuantity: Number(item[prop])
+                                HandlingUnitQuantity: Number(item[prop]),
+                                HandlingUnitQuantityUnit: 'KG', // Fixed
+                                sequence: item[`UcManualGenerationSizeOrder_${prop.replace('UcManualGenerationSize_', '').trim()}`],
                             });
                         }
                     }
                 });
 
+                payload._HandlingUnitItem = payload._HandlingUnitItem.sort((a, b) => Number(a.sequence) - Number(b.sequence)).map(it => { delete it.sequence; return it; });
                 if (payload._HandlingUnitItem.length === 0) {
                     MessageToast.show('Nenhuma quantidade informada.');
                     return;
                 }
-            }
+
+                const listBinding = v4model.bindList('/HandlingUnit');
+                listBinding.requestContexts().then(function (aContexts) {
+                    console.log(aContexts);
+                    aContexts.forEach(function (oContext) {
+                        console.log(oContext);
+                    });
+                });
+
+                // model.create('https://s4dev2.grupokyly.com:443/sap/opu/odata4/sap/API_HANDLINGUNIT/srvd_a2x/sap/API_HANDLINGUNIT/0001/HandlingUnit', payload, {
+                //     success: function (data) {
+                //         MessageToast.show('Ordens de manuseio criadas com sucesso.');
+                //     },
+                //     error: function (data) {
+                //         MessageToast.show('Erro ao criar ordens de manuseio.');
+                //     }
+                // });
+            },
         });
     });

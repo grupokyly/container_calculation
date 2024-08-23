@@ -16,9 +16,8 @@
                         <Label text="Ordem Mestre" labelFor="cb_master_order" />
                         <ComboBox
                             id="cb_master_order"
-                            showSecondaryValues="true"
-                            items="{ path: '/ZGKPP_DD_CONTAINER_CALC', sorter: { path: 'MasterProductionOrder', descending: false } }">
-                            <core:ListItem key="{key}" text="{MasterProductionOrder}" />
+                            items="{ path: '/ZGKPP_DD_CONTAINER_CALC', length: 999999999, sorter: { path: 'MasterProductionOrder', descending: false } }">
+                            <core:Item key="{key}" text="{MasterProductionOrder}" />
                         </ComboBox>
                     </l:VerticalLayout>
                     <l:VerticalLayout>
@@ -31,7 +30,7 @@
                     </l:VerticalLayout>
                 </l:HorizontalLayout>
             </Panel>
-            <IconTabBar expandable="false" showAllCloseButtons="false">
+            <IconTabBar expandable="false">
                 <items>
                     <IconTabFilter text="Dados gerais">
                         <Panel>
@@ -54,8 +53,8 @@
                             <content>
                                 <Table id="box_capacity_table" items="{ path: 'cadCaixasModel>/' }" inset="false">
                                     <columns>
-                                        <Column id="column_caixa">
-                                            <FormattedText text="Caixa" class="blueBoldLabel" />
+                                        <Column id="column_caixa" hAlign="Center">
+                                            <Text text="Caixa" />
                                         </Column>
                                     </columns>
                                     <items>
@@ -89,10 +88,10 @@
                                 <Table id="manual_uc_generation_table" items="{ path: 'ucManualModel>/' }" inset="false" fixedLayout="false">
                                     <columns>
                                         <Column id="manual_uc_column_record_selected" />
-                                        <Column id="manual_uc_column_pecas_caixa">
+                                        <Column id="manual_uc_column_pecas_caixa" hAlign="Center">
                                             <Text text="Peças por caixa" />
                                         </Column>
-                                        <Column id="manual_uc_column_uc_manual_caixa">
+                                        <Column id="manual_uc_column_uc_manual_caixa" hAlign="Center">
                                             <Text text="Caixa" />
                                         </Column>
                                     </columns>
@@ -132,17 +131,17 @@
                             <content>
                                 <Table>
                                     <columns>
-                                        <Column id="automatic_uc_generation_checked" />
-                                        <Column id="automatic_uc_generation_commercial_unit" />
-                                        <Column id="automatic_uc_generation_production_order" />
-                                        <Column id="automatic_uc_generation_material" />
-                                        <Column id="automatic_uc_generation_material_color" />
-                                        <Column id="automatic_uc_generation_box_size" />
-                                        <Column id="automatic_uc_generation_size" />
-                                        <Column id="automatic_uc_generation_size_sequence" />
-                                        <Column id="automatic_uc_generation_generated_quantity" />
-                                        <Column id="automatic_uc_generation_ideal_quantity" />
-                                        <Column id="automatic_uc_generation_towers" />
+                                        <Column id="automatic_uc_generation_checked" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_commercial_unit" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_production_order" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_material" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_material_color" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_box_size" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_size" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_size_sequence" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_generated_quantity" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_ideal_quantity" hAlign="Center" />
+                                        <Column id="automatic_uc_generation_towers" hAlign="Center" />
                                     </columns>
                                 </Table>
                             </content>
@@ -153,7 +152,7 @@
                             <content>
                                 <Table id="quantity_check_table" inset="false">
                                     <columns>
-                                        <Column id="column_quantity_check_item"/>
+                                        <Column id="column_quantity_check_item" />
                                     </columns>
                                 </Table>
                             </content>
