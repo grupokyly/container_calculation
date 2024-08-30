@@ -24,6 +24,15 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
+      },
+      "handlingUnitsService": {
+        "uri": "/sap/opu/odata4/sap/API_HANDLINGUNIT/srvd_a2x/sap/API_HANDLINGUNIT/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/handlingUnitMetadata.xml",
+          "odataVersion": "4.0"
+        }
       }
     }
   },
@@ -73,6 +82,16 @@
         "dataSource": "mainService",
         "preload": true,
         "settings": {}
+      },
+      "handlingUnits": {
+        "dataSource": "handlingUnitsService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
       }
     },
     "resources": {

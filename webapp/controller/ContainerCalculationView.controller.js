@@ -268,7 +268,7 @@ sap.ui.define([
                             path: 'quantityCheckModel>/',
                             template: new sap.m.ColumnListItem({
                                 cells: [
-                                    new sap.m.Text({ text: '{quantityCheckModel>Item}' }),
+                                    new sap.m.FormattedText({ htmlText: '{quantityCheckModel>Item}' }),
                                     ...sizes.map((size) => new sap.m.Text({ text: `{quantityCheckModel>quantityCheckSize_${size}}` }))
                                 ]
                             })
@@ -308,44 +308,58 @@ sap.ui.define([
                 const items = (view.getModel('ucManualModel')?.getData() ?? []);
                 if (!data || items.length == 0) return;
 
-                const v4model = new sap.ui.model.odata.v4.ODataModel({
-                    serviceUrl: 'https://s4dev2.grupokyly.com/sap/opu/odata4/sap/ZGKPP_DD_CONTAINER_CALC_SRV/srvd_a2x/sap/ZGKPP_DD_CONTAINER_CALC_SRV/0001/',
-                    synchronizationMode: 'None',
-                });
+                // const v4model = new sap.ui.model.odata.v4.ODataModel({
+                //     serviceUrl: 'https://s4dev2.grupokyly.com/sap/opu/odata4/sap/ZGKPP_DD_CONTAINER_CALC_SRV/srvd_a2x/sap/ZGKPP_DD_CONTAINER_CALC_SRV/0001/',
+                //     synchronizationMode: 'None',
+               
+                // });
+
+                const v4model = this.getView().getModel('handlingUnits');
                 console.log(v4model);
 
-                const payload = ({
-                    PackagingMaterial: data.Material.trim(),
-                    Plant: '1000', // Fixed
-                    _HandlingUnitItem: []
-                });
+                model.read('/HandlingUnit', {
+                    // urlParameters: {},
 
-                items.forEach(item => {
-                    for (var prop in item) {
-                        if (prop.startsWith('UcManualGenerationSize_')) {
-                            payload._HandlingUnitItem.push({
-                                Material: item.Box?.trim(),
-                                HandlingUnitQuantity: Number(item[prop]),
-                                HandlingUnitQuantityUnit: 'KG', // Fixed
-                                sequence: item[`UcManualGenerationSizeOrder_${prop.replace('UcManualGenerationSize_', '').trim()}`],
-                            });
-                        }
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
                     }
                 });
 
-                payload._HandlingUnitItem = payload._HandlingUnitItem.sort((a, b) => Number(a.sequence) - Number(b.sequence)).map(it => { delete it.sequence; return it; });
-                if (payload._HandlingUnitItem.length === 0) {
-                    MessageToast.show('Nenhuma quantidade informada.');
-                    return;
-                }
+                // const payload = ({
+                //     PackagingMaterial: data.Material.trim(),
+                //     Plant: '1000', // Fixed
+                //     _HandlingUnitItem: []
+                // });
 
-                const listBinding = v4model.bindList('/HandlingUnit');
-                listBinding.requestContexts().then(function (aContexts) {
-                    console.log(aContexts);
-                    aContexts.forEach(function (oContext) {
-                        console.log(oContext);
-                    });
-                });
+                // items.forEach(item => {
+                //     for (var prop in item) {
+                //         if (prop.startsWith('UcManualGenerationSize_')) {
+                //             payload._HandlingUnitItem.push({
+                //                 Material: item.Box?.trim(),
+                //                 HandlingUnitQuantity: Number(item[prop]),
+                //                 HandlingUnitQuantityUnit: 'KG', // Fixed
+                //                 _sequence: item[`UcManualGenerationSizeOrder_${prop.replace('UcManualGenerationSize_', '').trim()}`],
+                //             });
+                //         }
+                //     }
+                // });
+
+                // payload._HandlingUnitItem = payload._HandlingUnitItem.sort((a, b) => Number(a.sequence) - Number(b.sequence)).map(it => { delete it._sequence; return it; });
+                // if (payload._HandlingUnitItem.length === 0) {
+                //     MessageToast.show('Nenhuma quantidade informada.');
+                //     return;
+                // }
+
+                // const listBinding = v4model.bindList('/HandlingUnit');
+                // listBinding.requestContexts().then(function (aContexts) {
+                //     console.log(aContexts);
+                //     aContexts.forEach(function (oContext) {
+                //         console.log(oContext);
+                //     });
+                // });
 
                 // model.create('https://s4dev2.grupokyly.com:443/sap/opu/odata4/sap/API_HANDLINGUNIT/srvd_a2x/sap/API_HANDLINGUNIT/0001/HandlingUnit', payload, {
                 //     success: function (data) {

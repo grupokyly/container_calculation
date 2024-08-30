@@ -1,0 +1,1286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0"
+    xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+    xmlns="http://docs.oasis-open.org/odata/ns/edm">
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="SAP__common" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="SAP__measures" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="SAP__core" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="SAP__capabilities" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="SAP__aggregation" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="SAP__validation" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="SAP__UI" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HTML5',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.HTML5.v1" Alias="SAP__HTML5" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PDF',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_SESSION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="SAP__session" />
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="com.sap.gateway.srvd_a2x.api_handlingunit.v0001" Alias="SAP__self">
+            <Annotation Term="SAP__core.SchemaVersion" String="1.0.0" />
+            <EntityType Name="HandlingUnitSerialNumber_Type">
+                <Key>
+                    <PropertyRef Name="HandlingUnitItem" />
+                    <PropertyRef Name="HandlingUnitExternalID" />
+                    <PropertyRef Name="Warehouse" />
+                    <PropertyRef Name="StockItemUUID" />
+                    <PropertyRef Name="SerialNumber" />
+                </Key>
+                <Property Name="HandlingUnitItem" Type="Edm.String" Nullable="false" MaxLength="6" />
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="StockItemUUID" Type="Edm.Guid" Nullable="false" />
+                <Property Name="SerialNumber" Type="Edm.String" Nullable="false" MaxLength="18" />
+                <Property Name="Equipment" Type="Edm.String" Nullable="false" MaxLength="18" />
+                <NavigationProperty Name="_HandlingUnit"
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitType"
+                    Nullable="false">
+                    <ReferentialConstraint Property="HandlingUnitExternalID"
+                        ReferencedProperty="HandlingUnitExternalID" />
+                    <ReferentialConstraint Property="Warehouse" ReferencedProperty="Warehouse" />
+                </NavigationProperty>
+                <NavigationProperty Name="_HandlingUnitItem"
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitItemType"
+                    Nullable="false" Partner="_HandlingUnitItemSerialNumber">
+                    <ReferentialConstraint Property="HandlingUnitExternalID"
+                        ReferencedProperty="HandlingUnitExternalID" />
+                    <ReferentialConstraint Property="StockItemUUID"
+                        ReferencedProperty="StockItemUUID" />
+                    <ReferentialConstraint Property="Warehouse" ReferencedProperty="Warehouse" />
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="HandlingUnitItemType">
+                <Key>
+                    <PropertyRef Name="HandlingUnitExternalID" />
+                    <PropertyRef Name="Warehouse" />
+                    <PropertyRef Name="StockItemUUID" />
+                </Key>
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="StockItemUUID" Type="Edm.Guid" Nullable="false" />
+                <Property Name="HandlingUnitItem" Type="Edm.String" Nullable="false" MaxLength="6" />
+                <Property Name="HandlingUnitTypeOfContent" Type="Edm.String" Nullable="false"
+                    MaxLength="1" />
+                <Property Name="HandlingUnitNestedExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="HandlingUnitReferenceDocument" Type="Edm.String" Nullable="false"
+                    MaxLength="10" />
+                <Property Name="HandlingUnitRefDocumentItem" Type="Edm.String" Nullable="false"
+                    MaxLength="10" />
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" />
+                <Property Name="Batch" Type="Edm.String" Nullable="false" MaxLength="10" />
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="StorageLocation" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="HandlingUnitQuantity" Type="Edm.Decimal" Nullable="false"
+                    Precision="15" Scale="3" />
+                <Property Name="HandlingUnitQuantityUnit" Type="Edm.String" Nullable="false"
+                    MaxLength="3" />
+                <Property Name="HandlingUnitAltUnitOfMeasure" Type="Edm.String" Nullable="false"
+                    MaxLength="3" />
+                <Property Name="HandlingUnitNrOfAuxPackgMat" Type="Edm.Int32" Nullable="false" />
+                <Property Name="HandlingUnitNumberOfSerialNumb" Type="Edm.Int32" Nullable="false" />
+                <Property Name="SerialNumberProfile" Type="Edm.String" Nullable="false"
+                    MaxLength="4" />
+                <Property Name="SAP__Messages"
+                    Type="Collection(com.sap.gateway.srvd_a2x.api_handlingunit.v0001.SAP__Message)"
+                    Nullable="false" />
+                <NavigationProperty Name="_HandlingUnit"
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitType"
+                    Nullable="false" Partner="_HandlingUnitItem">
+                    <ReferentialConstraint Property="HandlingUnitExternalID"
+                        ReferencedProperty="HandlingUnitExternalID" />
+                    <ReferentialConstraint Property="Warehouse" ReferencedProperty="Warehouse" />
+                </NavigationProperty>
+                <NavigationProperty Name="_HandlingUnitItemSerialNumber"
+                    Type="Collection(com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitSerialNumber_Type)"
+                    Partner="_HandlingUnitItem">
+                    <OnDelete Action="Cascade" />
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="HandlingUnitType">
+                <Key>
+                    <PropertyRef Name="HandlingUnitExternalID" />
+                    <PropertyRef Name="Warehouse" />
+                </Key>
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="PackagingMaterial" Type="Edm.String" Nullable="false" MaxLength="40" />
+                <Property Name="PackagingMaterialType" Type="Edm.String" Nullable="false"
+                    MaxLength="4" />
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="StorageLocation" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="ShippingPoint" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="ParentHandlingUnitNumber" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="GrossWeight" Type="Edm.Decimal" Nullable="false" Precision="15"
+                    Scale="3" />
+                <Property Name="NetWeight" Type="Edm.Decimal" Nullable="false" Precision="15"
+                    Scale="3" />
+                <Property Name="HandlingUnitMaxWeight" Type="Edm.Decimal" Nullable="false"
+                    Precision="15" Scale="3" />
+                <Property Name="WeightUnit" Type="Edm.String" Nullable="false" MaxLength="3" />
+                <Property Name="HandlingUnitTareWeight" Type="Edm.Decimal" Nullable="false"
+                    Precision="15" Scale="3" />
+                <Property Name="HandlingUnitTareWeightUnit" Type="Edm.String" Nullable="false"
+                    MaxLength="3" />
+                <Property Name="GrossVolume" Type="Edm.Decimal" Nullable="false" Precision="15"
+                    Scale="3" />
+                <Property Name="HandlingUnitNetVolume" Type="Edm.Decimal" Nullable="false"
+                    Precision="15" Scale="3" />
+                <Property Name="HandlingUnitMaxVolume" Type="Edm.Decimal" Nullable="false"
+                    Precision="15" Scale="3" />
+                <Property Name="VolumeUnit" Type="Edm.String" Nullable="false" MaxLength="3" />
+                <Property Name="HandlingUnitTareVolume" Type="Edm.Decimal" Nullable="false"
+                    Precision="15" Scale="3" />
+                <Property Name="HandlingUnitTareVolumeUnit" Type="Edm.String" Nullable="false"
+                    MaxLength="3" />
+                <Property Name="HandlingUnitLength" Type="Edm.Decimal" Nullable="false"
+                    Precision="13" Scale="3" />
+                <Property Name="HandlingUnitWidth" Type="Edm.Decimal" Nullable="false"
+                    Precision="13" Scale="3" />
+                <Property Name="HandlingUnitHeight" Type="Edm.Decimal" Nullable="false"
+                    Precision="13" Scale="3" />
+                <Property Name="UnitOfMeasureDimension" Type="Edm.String" Nullable="false"
+                    MaxLength="3" />
+                <Property Name="HandlingUnitReferenceDocument" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="HandlingUnitRefDocType" Type="Edm.String" Nullable="false"
+                    MaxLength="2" />
+                <Property Name="HandlingUnitHasCrossRefDoc" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="PackingInstruction" Type="Edm.Guid" />
+                <Property Name="HandlingUnitSecondExternalId" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="CreatedByUser" Type="Edm.String" Nullable="false" MaxLength="12" />
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" />
+                <Property Name="LastChangedByUser" Type="Edm.String" Nullable="false" MaxLength="12" />
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" />
+                <Property Name="StorageType" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="StorageSection" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="StorageBin" Type="Edm.String" Nullable="false" MaxLength="18" />
+                <Property Name="EWMResource" Type="Edm.String" Nullable="false" MaxLength="18" />
+                <Property Name="EWMConsolidationGroup" Type="Edm.String" Nullable="false"
+                    MaxLength="10" />
+                <Property Name="HandlingUnitIsClosed" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="ExternalStorageProcessStep" Type="Edm.String" Nullable="false"
+                    MaxLength="4" />
+                <Property Name="StorageProcess" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="EWMHUProcessStepIsCompleted" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHandlingUnitIsPlanned" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHandlingUnitIsInStock" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHandlingUnitIsUnloaded" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHandlingUnitIsLoaded" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMTranspUnitIsAssigned" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHUContentChangeIsBlocked" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHUMovementChangeIsBlocked" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHUAttributeChangeIsBlocked" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHUPostingChangeIsBlocked" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHUIsBlockedByCustoms" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="EWMHUIsPackedForShipping" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="ZZ1_OrdemdeProduo_HUH" Type="Edm.String" Nullable="false"
+                    MaxLength="12" />
+                <Property Name="ZZ1_Torre_HUH" Type="Edm.Decimal" Nullable="false" Precision="3" />
+                <Property Name="ZZ1_QuantidadeIdeal_HUH" Type="Edm.Decimal" Nullable="false"
+                    Precision="3" />
+                <Property Name="ZZ1_EndereoAtual_HUH" Type="Edm.String" Nullable="false"
+                    MaxLength="40" />
+                <Property Name="ZZ1_OrdemMestre_HUH" Type="Edm.String" Nullable="false"
+                    MaxLength="12" />
+                <Property Name="ZZ1_EndereoAnterior_HUH" Type="Edm.String" Nullable="false"
+                    MaxLength="40" />
+                <Property Name="SAP__Messages"
+                    Type="Collection(com.sap.gateway.srvd_a2x.api_handlingunit.v0001.SAP__Message)"
+                    Nullable="false" />
+                <NavigationProperty Name="_HandlingUnitItem"
+                    Type="Collection(com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitItemType)"
+                    Partner="_HandlingUnit">
+                    <OnDelete Action="Cascade" />
+                </NavigationProperty>
+                <NavigationProperty Name="_HandlingUnitReferenceDoc"
+                    Type="Collection(com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitReferenceDoc_Type)"
+                    Partner="_HandlingUnit">
+                    <OnDelete Action="Cascade" />
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="HandlingUnitReferenceDoc_Type">
+                <Key>
+                    <PropertyRef Name="Warehouse" />
+                    <PropertyRef Name="HandlingUnitExternalID" />
+                    <PropertyRef Name="HandlingUnitReferenceDocument" />
+                </Key>
+                <Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="HandlingUnitReferenceDocument" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <NavigationProperty Name="_HandlingUnit"
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitType"
+                    Nullable="false" Partner="_HandlingUnitReferenceDoc">
+                    <ReferentialConstraint Property="Warehouse" ReferencedProperty="Warehouse" />
+                    <ReferentialConstraint Property="HandlingUnitExternalID"
+                        ReferencedProperty="HandlingUnitExternalID" />
+                </NavigationProperty>
+            </EntityType>
+            <ComplexType Name="HandlingUnitRepackItemResult_Type">
+                <Property Name="EWMStorageBin" Type="Edm.String" Nullable="false" MaxLength="18" />
+                <Property Name="EWMWarehouse" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="ParentHandlingUnitNumber" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="ParentHandlingUnitUUID" Type="Edm.Guid" />
+                <Property Name="StockItemUUID" Type="Edm.Guid" />
+            </ComplexType>
+            <ComplexType Name="D_HNDLGUNITITMREPACKSRLNMBRP">
+                <Property Name="SerialNumber" Type="Edm.String" Nullable="false" MaxLength="18" />
+                <Property Name="EWMSerialNumber" Type="Edm.String" Nullable="false" MaxLength="30" />
+            </ComplexType>
+            <ComplexType Name="HandlingUnitMoveResult_Type">
+                <Property Name="CreatedByUser" Type="Edm.String" Nullable="false" MaxLength="12" />
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7" />
+                <Property Name="GrossWeight" Type="Edm.Decimal" Nullable="false" Precision="15"
+                    Scale="3" />
+                <Property Name="HandlingUnitCharUUID" Type="Edm.Guid" />
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="HandlingUnitInternalStatus" Type="Edm.String" Nullable="false"
+                    MaxLength="4" />
+                <Property Name="HandlingUnitReferenceDocument" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="PackagingMaterial" Type="Edm.String" Nullable="false" MaxLength="40" />
+                <Property Name="PackagingMaterialType" Type="Edm.String" Nullable="false"
+                    MaxLength="4" />
+                <Property Name="ParentHandlingUnitNumber" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Property Name="ReceivingStorageBin" Type="Edm.String" Nullable="false"
+                    MaxLength="18" />
+                <Property Name="ReceivingStorageLocation" Type="Edm.String" Nullable="false"
+                    MaxLength="4" />
+                <Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="3" />
+                <Property Name="WeightUnit" Type="Edm.String" Nullable="false" MaxLength="3" />
+            </ComplexType>
+            <ComplexType Name="SAP__Message">
+                <Property Name="code" Type="Edm.String" Nullable="false" />
+                <Property Name="message" Type="Edm.String" Nullable="false" />
+                <Property Name="target" Type="Edm.String" />
+                <Property Name="additionalTargets" Type="Collection(Edm.String)" Nullable="false" />
+                <Property Name="transition" Type="Edm.Boolean" Nullable="false" />
+                <Property Name="numericSeverity" Type="Edm.Byte" Nullable="false" />
+                <Property Name="longtextUrl" Type="Edm.String" />
+            </ComplexType>
+            <Action Name="MoveHandlingUnits" IsBound="true">
+                <Parameter Name="_it"
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitType"
+                    Nullable="false" />
+                <Parameter Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Parameter Name="HandlingUnitGoodsMovementEvent" Type="Edm.String" Nullable="false"
+                    MaxLength="4" />
+                <Parameter Name="ReceivingPlant" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Parameter Name="ReceivingStorageLocation" Type="Edm.String" Nullable="false"
+                    MaxLength="4" />
+                <Parameter Name="ReceivingStorageBin" Type="Edm.String" Nullable="false"
+                    MaxLength="18" />
+                <ReturnType
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitMoveResult_Type"
+                    Nullable="false" />
+            </Action>
+            <Action Name="RepackHandlingUnitItem" IsBound="true">
+                <Parameter Name="_it"
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitItemType"
+                    Nullable="false" />
+                <Parameter Name="ParentHandlingUnitNumber" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Parameter Name="HandlingUnitQuantity" Type="Edm.Decimal" Nullable="false"
+                    Precision="15" Scale="3" />
+                <Parameter Name="HandlingUnitQuantityUnit" Type="Edm.String" Nullable="false"
+                    MaxLength="3" />
+                <Parameter Name="UnitOfMeasureSAPCode" Type="Edm.String" Nullable="false"
+                    MaxLength="3" />
+                <Parameter Name="UnitOfMeasureISOCode" Type="Edm.String" Nullable="false"
+                    MaxLength="3" />
+                <Parameter Name="EWMWorkCenter" Type="Edm.String" Nullable="false" MaxLength="4" />
+                <Parameter Name="_SerialNumber"
+                    Type="Collection(com.sap.gateway.srvd_a2x.api_handlingunit.v0001.D_HNDLGUNITITMREPACKSRLNMBRP)"
+                    Nullable="false" />
+                <ReturnType
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitRepackItemResult_Type"
+                    Nullable="false" />
+            </Action>
+            <Action Name="RepackHandlingUnitHeader" IsBound="true">
+                <Parameter Name="_it"
+                    Type="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitType"
+                    Nullable="false" />
+                <Parameter Name="ParentHandlingUnitNumber" Type="Edm.String" Nullable="false"
+                    MaxLength="20" />
+                <Parameter Name="EWMWorkCenter" Type="Edm.String" Nullable="false" MaxLength="4" />
+            </Action>
+            <EntityContainer Name="Container">
+                <EntitySet Name="HandlingUnit"
+                    EntityType="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitType">
+                    <NavigationPropertyBinding Path="_HandlingUnitItem" Target="HandlingUnitItem" />
+                    <NavigationPropertyBinding Path="_HandlingUnitReferenceDoc"
+                        Target="HandlingUnitReferenceDocument" />
+                </EntitySet>
+                <EntitySet Name="HandlingUnitItem"
+                    EntityType="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitItemType">
+                    <NavigationPropertyBinding Path="_HandlingUnit" Target="HandlingUnit" />
+                    <NavigationPropertyBinding Path="_HandlingUnitItemSerialNumber"
+                        Target="HandlingUnitSerialNumber" />
+                </EntitySet>
+                <EntitySet Name="HandlingUnitReferenceDocument"
+                    EntityType="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitReferenceDoc_Type">
+                    <NavigationPropertyBinding Path="_HandlingUnit" Target="HandlingUnit" />
+                </EntitySet>
+                <EntitySet Name="HandlingUnitSerialNumber"
+                    EntityType="com.sap.gateway.srvd_a2x.api_handlingunit.v0001.HandlingUnitSerialNumber_Type">
+                    <NavigationPropertyBinding Path="_HandlingUnit" Target="HandlingUnit" />
+                    <NavigationPropertyBinding Path="_HandlingUnitItem" Target="HandlingUnitItem" />
+                </EntitySet>
+            </EntityContainer>
+            <Annotations Target="SAP__self.HandlingUnitMoveResult_Type/GrossWeight">
+                <Annotation Term="SAP__measures.Unit" Path="WeightUnit" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitSerialNumber_Type/HandlingUnitItem">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsDigitSequence" />
+                <Annotation Term="SAP__common.Label" String="Item UC" />
+                <Annotation Term="SAP__common.Heading" String="Item" />
+                <Annotation Term="SAP__common.QuickInfo" String="Item de unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitSerialNumber_Type/HandlingUnitExternalID">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Unidade comercial" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Identificador externo da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitSerialNumber_Type/Warehouse">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Nº do depósito" />
+                <Annotation Term="SAP__common.Heading" String="NDp" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Nº do depósito/complexo de depósito" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitSerialNumber_Type/StockItemUUID">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="GUID estoque" />
+                <Annotation Term="SAP__common.QuickInfo" String="GUID item do estoque" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitSerialNumber_Type/SerialNumber">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Nº de série" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitSerialNumber_Type/Equipment">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Equipamento" />
+                <Annotation Term="SAP__common.Heading" String="Equipam." />
+                <Annotation Term="SAP__common.QuickInfo" String="Nº equipamento" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitSerialNumber_Type">
+                <Annotation Term="SAP__common.Label"
+                    String="Nº de série do item da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.Container/HandlingUnitSerialNumber">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false" />
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true" />
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection>
+                        <PropertyPath>_HandlingUnit/LastChangeDateTime</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="Warehouse" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitExternalID">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Unidade comercial" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Identificador externo da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/Warehouse">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Nº do depósito" />
+                <Annotation Term="SAP__common.Heading" String="NDp" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Nº do depósito/complexo de depósito" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/StockItemUUID">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="GUID estoque" />
+                <Annotation Term="SAP__common.QuickInfo" String="GUID item do estoque" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitItem">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsDigitSequence" />
+                <Annotation Term="SAP__common.Label" String="Item UC" />
+                <Annotation Term="SAP__common.Heading" String="Item" />
+                <Annotation Term="SAP__common.QuickInfo" String="Item de unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitTypeOfContent">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Tipo de item" />
+                <Annotation Term="SAP__common.Heading" String="T" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Tipo do conteúdo do item da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitNestedExternalID">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="char20" />
+                <Annotation Term="SAP__common.QuickInfo" String="Char 20" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitReferenceDocument">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Remessa" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitRefDocumentItem">
+                <Annotation Term="SAP__core.Immutable" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/Material">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Material" />
+                <Annotation Term="SAP__common.QuickInfo" String="Nº do material" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/Batch">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Lote" />
+                <Annotation Term="SAP__common.QuickInfo" String="Número do lote" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/Plant">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Centro" />
+                <Annotation Term="SAP__common.Heading" String="Cen." />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/StorageLocation">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Depósito" />
+                <Annotation Term="SAP__common.Heading" String="Dep." />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitQuantity">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__measures.Unit" Path="HandlingUnitQuantityUnit" />
+                <Annotation Term="SAP__common.Label" String="Quantidade embalada" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Qtd.básica embalada no item de unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitQuantityUnit">
+                <Annotation Term="SAP__common.IsUnit" />
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.Label" String="UM unidade comercial" />
+                <Annotation Term="SAP__common.Heading" String="UM" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="UM básica da quantidade embalada (VEMNG)" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitAltUnitOfMeasure">
+                <Annotation Term="SAP__common.IsUnit" />
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.Label" String="Unidade de medida" />
+                <Annotation Term="SAP__common.Heading" String="UM" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Unidade de medida alternativa para unidade de medida estoque" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitNrOfAuxPackgMat">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Núm.mats.aux.emb." />
+                <Annotation Term="SAP__common.Heading" String="NúmMatsAE" />
+                <Annotation Term="SAP__common.QuickInfo" String="Núm.mats.aux.embalagem no item UC" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/HandlingUnitNumberOfSerialNumb">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Qtd.nºs de série" />
+                <Annotation Term="SAP__common.Heading" String="NmNºsS" />
+                <Annotation Term="SAP__common.QuickInfo" String="Quantidade de nºs de série" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/SerialNumberProfile">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Perfil do nº série" />
+                <Annotation Term="SAP__common.Heading" String="Perfil" />
+                <Annotation Term="SAP__common.QuickInfo" String="Perfil de nºs série" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType/_HandlingUnitItemSerialNumber">
+                <Annotation Term="SAP__common.Composition" />
+            </Annotations>
+            <Annotations Target="SAP__self.Container/HandlingUnitItem">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty"
+                                        NavigationPropertyPath="_HandlingUnitItemSerialNumber" />
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="true" />
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false" />
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true" />
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection>
+                        <PropertyPath>_HandlingUnit/LastChangeDateTime</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="Warehouse" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property"
+                                        PropertyPath="HandlingUnitTypeOfContent" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property"
+                                        PropertyPath="HandlingUnitNestedExternalID" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="Batch" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="Plant" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property"
+                                        PropertyPath="StorageLocation" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property"
+                                        PropertyPath="HandlingUnitQuantity" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property"
+                                        PropertyPath="SerialNumberProfile" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitItem(SAP__self.HandlingUnitItemType)/ParentHandlingUnitNumber">
+                <Annotation Term="SAP__common.FieldControl"
+                    EnumMember="SAP__common.FieldControlType/Mandatory" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitItemType">
+                <Annotation Term="SAP__common.Label" String="Item de unidade comercial" />
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages" />
+            </Annotations>
+            <Annotations Target="SAP__self.Container">
+                <Annotation Term="SAP__CodeList.UnitsOfMeasure">
+                    <Record>
+                        <PropertyValue Property="Url"
+                            String="../../../../default/iwbep/common/0001/$metadata" />
+                        <PropertyValue Property="CollectionPath" String="UnitsOfMeasure" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup"
+                            EnumMember="SAP__aggregation.RollupType/None" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.ApplyMultiUnitBehaviorForSortingAndFiltering"
+                    Bool="true" />
+                <Annotation Term="SAP__capabilities.FilterFunctions">
+                    <Collection>
+                        <String>eq</String>
+                        <String>ne</String>
+                        <String>gt</String>
+                        <String>ge</String>
+                        <String>lt</String>
+                        <String>le</String>
+                        <String>and</String>
+                        <String>or</String>
+                        <String>contains</String>
+                        <String>startswith</String>
+                        <String>endswith</String>
+                        <String>any</String>
+                        <String>all</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SupportedFormats">
+                    <Collection>
+                        <String>application/json</String>
+                        <String>application/pdf</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__PDF.Features">
+                    <Record>
+                        <PropertyValue Property="DocumentDescriptionReference"
+                            String="../../../../default/iwbep/common/0001/$metadata" />
+                        <PropertyValue Property="DocumentDescriptionCollection"
+                            String="MyDocumentDescriptions" />
+                        <PropertyValue Property="ArchiveFormat" Bool="true" />
+                        <PropertyValue Property="Border" Bool="true" />
+                        <PropertyValue Property="CoverPage" Bool="true" />
+                        <PropertyValue Property="FitToPage" Bool="true" />
+                        <PropertyValue Property="FontName" Bool="true" />
+                        <PropertyValue Property="FontSize" Bool="true" />
+                        <PropertyValue Property="Margin" Bool="true" />
+                        <PropertyValue Property="Signature" Bool="true" />
+                        <PropertyValue Property="ResultSizeDefault" Int="20000" />
+                        <PropertyValue Property="ResultSizeMaximum" Int="20000" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitExternalID">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Unidade comercial" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Identificador externo da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/Warehouse">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Nº do depósito" />
+                <Annotation Term="SAP__common.Heading" String="NDp" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Nº do depósito/complexo de depósito" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/PackagingMaterial">
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Mat.embal." />
+                <Annotation Term="SAP__common.QuickInfo" String="Material de embalagem" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/PackagingMaterialType">
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Tipo mat.embalagem" />
+                <Annotation Term="SAP__common.Heading" String="TpMAE" />
+                <Annotation Term="SAP__common.QuickInfo" String="Tipo de material de embalagem" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/Plant">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Centro" />
+                <Annotation Term="SAP__common.Heading" String="Cen." />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/StorageLocation">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Depósito" />
+                <Annotation Term="SAP__common.Heading" String="Dep." />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ShippingPoint">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Local expedição" />
+                <Annotation Term="SAP__common.Heading" String="LExp" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Local de expedição/ponto de recebimento" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ParentHandlingUnitNumber">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Unidade comercial" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Identificador externo da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/GrossWeight">
+                <Annotation Term="SAP__measures.Unit" Path="WeightUnit" />
+                <Annotation Term="SAP__common.Label" String="Peso total" />
+                <Annotation Term="SAP__common.QuickInfo" String="Peso total da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/NetWeight">
+                <Annotation Term="SAP__measures.Unit" Path="WeightUnit" />
+                <Annotation Term="SAP__common.Label" String="Peso de carga" />
+                <Annotation Term="SAP__common.QuickInfo" String="Peso de carga da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitMaxWeight">
+                <Annotation Term="SAP__measures.Unit" Path="WeightUnit" />
+                <Annotation Term="SAP__common.Label" String="Peso carga permit." />
+                <Annotation Term="SAP__common.Heading" String="Peso de carga permitido" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Peso de carga máximo permitido da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/WeightUnit">
+                <Annotation Term="SAP__common.IsUnit" />
+                <Annotation Term="SAP__common.Label" String="Unidade de peso" />
+                <Annotation Term="SAP__common.Heading" String="Un." />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitTareWeight">
+                <Annotation Term="SAP__measures.Unit" Path="HandlingUnitTareWeightUnit" />
+                <Annotation Term="SAP__common.Label" String="Massa líquida" />
+                <Annotation Term="SAP__common.QuickInfo" String="Tara da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitTareWeightUnit">
+                <Annotation Term="SAP__common.IsUnit" />
+                <Annotation Term="SAP__common.Label" String="Unidade de peso" />
+                <Annotation Term="SAP__common.Heading" String="Un." />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/GrossVolume">
+                <Annotation Term="SAP__measures.Unit" Path="VolumeUnit" />
+                <Annotation Term="SAP__common.Label" String="Volume total" />
+                <Annotation Term="SAP__common.QuickInfo" String="Volume total da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitNetVolume">
+                <Annotation Term="SAP__measures.Unit" Path="VolumeUnit" />
+                <Annotation Term="SAP__common.Label" String="Volume de carga" />
+                <Annotation Term="SAP__common.Heading" String="Volume carga" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Volume de carga da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitMaxVolume">
+                <Annotation Term="SAP__measures.Unit" Path="VolumeUnit" />
+                <Annotation Term="SAP__common.Label" String="Volume permitido" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Volume de carga admissível da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/VolumeUnit">
+                <Annotation Term="SAP__common.IsUnit" />
+                <Annotation Term="SAP__common.Label" String="Unidade de volume" />
+                <Annotation Term="SAP__common.Heading" String="UVl" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitTareVolume">
+                <Annotation Term="SAP__measures.Unit" Path="HandlingUnitTareVolumeUnit" />
+                <Annotation Term="SAP__common.Label" String="Volume líquido" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Volume líquido da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitTareVolumeUnit">
+                <Annotation Term="SAP__common.IsUnit" />
+                <Annotation Term="SAP__common.Label" String="Unidade de volume" />
+                <Annotation Term="SAP__common.Heading" String="UVl" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitLength">
+                <Annotation Term="SAP__measures.Unit" Path="UnitOfMeasureDimension" />
+                <Annotation Term="SAP__common.Label" String="Comprimento" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitWidth">
+                <Annotation Term="SAP__measures.Unit" Path="UnitOfMeasureDimension" />
+                <Annotation Term="SAP__common.Label" String="Largura" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitHeight">
+                <Annotation Term="SAP__measures.Unit" Path="UnitOfMeasureDimension" />
+                <Annotation Term="SAP__common.Label" String="Altura" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/UnitOfMeasureDimension">
+                <Annotation Term="SAP__common.IsUnit" />
+                <Annotation Term="SAP__common.Label" String="Unidade de medida" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Unidade para comprimento/largura/altura" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitReferenceDocument">
+                <Annotation Term="SAP__core.Computed" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitRefDocType">
+                <Annotation Term="SAP__common.Label"
+                    String="Documento de referência para unidade comercial" />
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Heading" String="Ob" />
+                <Annotation Term="SAP__common.QuickInfo" String="Objeto de embalagem" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitHasCrossRefDoc">
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitSecondExternalId">
+                <Annotation Term="SAP__common.Label" String="Norma de embalagem" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Heading" String="Identif.UC 2" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="2. identificador externo da unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/CreatedByUser">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Criado por" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Nome do responsável que criou o objeto" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/CreationDateTime">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Abrev.registro hora" />
+                <Annotation Term="SAP__common.Heading" String="Abreviatura registr.hora" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Registro da hora UTC em forma breve (AAAAMMDDhhmmss)" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/LastChangedByUser">
+                <Annotation Term="SAP__common.Label" String="Data e hora de criação" />
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Heading" String="Modif.por" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Nome do responsável pela modificação do objeto" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/LastChangeDateTime">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Abrev.registro hora" />
+                <Annotation Term="SAP__common.Heading" String="Abreviatura registr.hora" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Registro da hora UTC em forma breve (AAAAMMDDhhmmss)" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/StorageType">
+                <Annotation Term="SAP__common.Label" String="Data e hora da última modificação" />
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Heading" String="Tp." />
+                <Annotation Term="SAP__common.QuickInfo" String="Tipo de depósito" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/StorageSection">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Área armazmto." />
+                <Annotation Term="SAP__common.Heading" String="Ár." />
+                <Annotation Term="SAP__common.QuickInfo" String="Área de armazenamento" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/StorageBin">
+                <Annotation Term="SAP__core.Immutable" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Posição no depósito" />
+                <Annotation Term="SAP__common.Heading" String="Pos.depós." />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMResource">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Recurso" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Recurso (meio de transporte ou usuário)" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/HandlingUnitIsClosed">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="MaterEmbalagemFech." />
+                <Annotation Term="SAP__common.Heading" String="F" />
+                <Annotation Term="SAP__common.QuickInfo" String="Material de embalagem fechado" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ExternalStorageProcessStep">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Etapa externa" />
+                <Annotation Term="SAP__common.Heading" String="Etapa do processo" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Etapa externa do processo de armazenamento" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/StorageProcess">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Proc.armazenamento" />
+                <Annotation Term="SAP__common.Heading" String="ProcArmzm." />
+                <Annotation Term="SAP__common.QuickInfo" String="Processo de armazenamento" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHUProcessStepIsCompleted">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Etapa UC concluída" />
+                <Annotation Term="SAP__common.Heading" String="Encerrado" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Etapa do processo para UC concluída" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHandlingUnitIsPlanned">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHandlingUnitIsInStock">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHandlingUnitIsUnloaded">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHandlingUnitIsLoaded">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMTranspUnitIsAssigned">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHUContentChangeIsBlocked">
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHUMovementChangeIsBlocked">
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHUAttributeChangeIsBlocked">
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHUPostingChangeIsBlocked">
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHUIsBlockedByCustoms">
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMHUIsPackedForShipping">
+                <Annotation Term="SAP__common.Label" String="Valor verdadeiro" />
+                <Annotation Term="SAP__common.Heading" String="Valor verdad." />
+                <Annotation Term="SAP__common.QuickInfo" String="Valor verdadeiro: verdadeiro/falso" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ZZ1_OrdemdeProduo_HUH">
+                <Annotation Term="SAP__common.IsDigitSequence" />
+                <Annotation Term="SAP__common.Label" String="Ordem de Produção" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ZZ1_OrdemMestre_HUH">
+                <Annotation Term="SAP__common.IsDigitSequence" />
+                <Annotation Term="SAP__common.Label" String="Ordem Mestre" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/_HandlingUnitItem">
+                <Annotation Term="SAP__common.Composition" />
+            </Annotations>
+            <Annotations Target="SAP__self.Container/HandlingUnit">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty"
+                                        NavigationPropertyPath="_HandlingUnitItem" />
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="true" />
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>StorageType</PropertyPath>
+                                <PropertyPath>StorageSection</PropertyPath>
+                                <PropertyPath>StorageBin</PropertyPath>
+                                <PropertyPath>EWMResource</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>StorageType</PropertyPath>
+                                <PropertyPath>StorageSection</PropertyPath>
+                                <PropertyPath>StorageBin</PropertyPath>
+                                <PropertyPath>EWMResource</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection>
+                        <PropertyPath>LastChangeDateTime</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true" />
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/_HandlingUnitReferenceDoc">
+                <Annotation Term="SAP__common.Composition" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.MoveHandlingUnits(SAP__self.HandlingUnitType)/HandlingUnitExternalID">
+                <Annotation Term="SAP__common.FieldControl"
+                    EnumMember="SAP__common.FieldControlType/Mandatory" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.MoveHandlingUnits(SAP__self.HandlingUnitType)/HandlingUnitGoodsMovementEvent">
+                <Annotation Term="SAP__common.FieldControl"
+                    EnumMember="SAP__common.FieldControlType/Mandatory" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.MoveHandlingUnits(SAP__self.HandlingUnitType)/ReceivingPlant">
+                <Annotation Term="SAP__common.FieldControl"
+                    EnumMember="SAP__common.FieldControlType/Mandatory" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.MoveHandlingUnits(SAP__self.HandlingUnitType)/ReceivingStorageLocation">
+                <Annotation Term="SAP__common.FieldControl"
+                    EnumMember="SAP__common.FieldControlType/Mandatory" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitHeader(SAP__self.HandlingUnitType)/ParentHandlingUnitNumber">
+                <Annotation Term="SAP__common.FieldControl"
+                    EnumMember="SAP__common.FieldControlType/Mandatory" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType">
+                <Annotation Term="SAP__common.Label" String="Unidade comercial" />
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitReferenceDoc_Type/Warehouse">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Nº do depósito" />
+                <Annotation Term="SAP__common.Heading" String="NDp" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Nº do depósito/complexo de depósito" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitReferenceDoc_Type/HandlingUnitExternalID">
+                <Annotation Term="SAP__core.Computed" />
+                <Annotation Term="SAP__common.IsUpperCase" />
+                <Annotation Term="SAP__common.Label" String="Unidade comercial" />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Identificador externo da unidade comercial" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.HandlingUnitReferenceDoc_Type/HandlingUnitReferenceDocument">
+                <Annotation Term="SAP__core.Computed" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitReferenceDoc_Type">
+                <Annotation Term="SAP__common.Label"
+                    String="Documento de referência de unidade comercial" />
+            </Annotations>
+            <Annotations Target="SAP__self.Container/HandlingUnitReferenceDocument">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false" />
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false" />
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true" />
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection />
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="Warehouse" />
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue" />
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.RepackHandlingUnitItem(SAP__self.HandlingUnitItemType)">
+                <Annotation Term="Communication.Contact">
+                    <Record />
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/PackingInstruction">
+                <Annotation Term="SAP__common.Label" String="Objeto embalagem" />
+                <Annotation Term="SAP__common.Heading" String="Obj.embal." />
+                <Annotation Term="SAP__common.QuickInfo"
+                    String="Nº interno unívoco do objeto de embalagem" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/EWMConsolidationGroup">
+                <Annotation Term="SAP__common.Label" String="Grp.consol." />
+                <Annotation Term="SAP__common.Heading" String="GrCons" />
+                <Annotation Term="SAP__common.QuickInfo" String="Grupo de consolidação" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ZZ1_Torre_HUH">
+                <Annotation Term="SAP__common.Label" String="Torre" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ZZ1_QuantidadeIdeal_HUH">
+                <Annotation Term="SAP__common.Label" String="Quantidade Ideal" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ZZ1_EndereoAtual_HUH">
+                <Annotation Term="SAP__common.Label" String="Endereço Atual" />
+            </Annotations>
+            <Annotations Target="SAP__self.HandlingUnitType/ZZ1_EndereoAnterior_HUH">
+                <Annotation Term="SAP__common.Label" String="Endereço Anterior" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.MoveHandlingUnits(SAP__self.HandlingUnitType)/ReceivingStorageBin">
+                <Annotation Term="SAP__core.OptionalParameter" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitItem(SAP__self.HandlingUnitItemType)/HandlingUnitQuantity">
+                <Annotation Term="SAP__core.OptionalParameter" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitItem(SAP__self.HandlingUnitItemType)/HandlingUnitQuantityUnit">
+                <Annotation Term="SAP__core.OptionalParameter" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitItem(SAP__self.HandlingUnitItemType)/UnitOfMeasureSAPCode">
+                <Annotation Term="SAP__core.OptionalParameter" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitItem(SAP__self.HandlingUnitItemType)/UnitOfMeasureISOCode">
+                <Annotation Term="SAP__core.OptionalParameter" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitItem(SAP__self.HandlingUnitItemType)/EWMWorkCenter">
+                <Annotation Term="SAP__core.OptionalParameter" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitItem(SAP__self.HandlingUnitItemType)/_SerialNumber">
+                <Annotation Term="SAP__core.OptionalParameter" />
+            </Annotations>
+            <Annotations
+                Target="SAP__self.RepackHandlingUnitHeader(SAP__self.HandlingUnitType)/EWMWorkCenter">
+                <Annotation Term="SAP__core.OptionalParameter" />
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
