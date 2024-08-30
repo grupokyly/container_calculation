@@ -313,7 +313,7 @@ sap.ui.define([
                 //     synchronizationMode: 'None',
                
                 // });
-
+// teste
                 const v4model = this.getView().getModel('handlingUnits');
                 console.log(v4model);
 
