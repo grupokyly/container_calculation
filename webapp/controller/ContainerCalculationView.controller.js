@@ -223,11 +223,33 @@ sap.ui.define([
                 view.setModel(new JSONModel(Array.isArray(ucManualModel) ? [...ucManualModel, newRow] : [newRow]), 'ucManualModel');
             },
 
-            _removeRowsFromManualUcGenerator: function () {
+            _removeRowsFromManualUcGenerator: async function () {
                 const view = this.getView();
-                const ucManualModel = view.getModel('ucManualModel')?.getData();
-                if (!ucManualModel || !Array.isArray(ucManualModel)) return;
-                view.setModel(new JSONModel(ucManualModel.filter(it => !it.RecordSelected)), 'ucManualModel');
+                const rows = view.getModel('ucManualModel')?.getData();
+                if (!rows || !Array.isArray(rows)) return;
+                rows.filter(row => row.RecordSelected && !row.RowIsNew && row.HandlingUnitExternalID).forEach(async (row) => {
+                    try {
+                        await fetch('/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/HandlingUnitSet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json; charset=UTF-8',
+                                'Accept': 'application/json',
+                                'X-REQUESTED-WITH': 'XMLHttpRequest',
+                            },
+                            body: JSON.stringify({
+                                HandlingUnitExternalID: row.HandlingUnitExternalID.trim(),
+                                HandlingUnitDelete: 'X',
+                                Return_Messages: []
+                            })
+                        }).then(response => response.json()).then(data => {
+                            if (data.d.Return_Messages.results.length > 0) {
+                                throw data.d.Return_Messages.results.map(it => it.Message.trim()).join('\n');
+                            }
+                        });
+                    }
+                    catch (error) { MessageToast.show(`Erro ao excluir registros: ${error}`); }
+                });
+                view.setModel(new JSONModel(rows.filter(it => !it.RecordSelected)), 'ucManualModel');
             },
 
             _buildQuantityCheckTableDynamically: function () {
