@@ -19,19 +19,17 @@ sap.ui.define([
                 view.addStyleClass('blueBoldLabel');
             },
 
-            onSearch: function () {
+            onSearch: async function () {
                 const view = this.getView();
                 const model = view.getModel();
+                view.setModel(new JSONModel([]), 'ucManualModel');
                 const masterOrder = (view.byId('cb_master_order')?.mProperties?.value?.trim() ?? '');
                 if (masterOrder === '') {
                     MessageToast.show('Informe a ordem mestre!');
                     return;
                 }
 
-                view.setModel(new JSONModel(), 'cadCaixasModel');
-                view.setModel(new JSONModel(), 'ucManualModel');
-
-                model.read('/ZGKPP_DD_CONTAINER_CALC', {
+                await model.read('/ZGKPP_DD_CONTAINER_CALC', {
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
@@ -61,6 +59,7 @@ sap.ui.define([
                         this._buildBoxCapacityTableDynamically();
                         this._fillBoxCapacityTableDynamically();
                         this._buildManualUcGenerationTableDynamically();
+                        this._fillManualUcGenerationTableDynamically();
                         this._buildQuantityCheckTableDynamically();
                         this._fillQuantityCheckTableDynamically();
                     }.bind(this)
@@ -157,7 +156,8 @@ sap.ui.define([
                             new sap.m.Input({
                                 value: '{ucManualModel>UnitsPerBox}',
                                 type: 'Number',
-                                width: 'auto'
+                                width: 'auto',
+                                editable: '{ucManualModel>RowIsNew}'
                             }),
                             new sap.m.ComboBox({
                                 items: {
@@ -165,15 +165,47 @@ sap.ui.define([
                                     template: new sap.ui.core.Item({ key: '{comboBoxItems>key}', text: '{comboBoxItems>text}' }),
                                     templateShareable: false
                                 },
-                                selectedKey: '{ucManualModel>Box}'
+                                selectedKey: '{ucManualModel>Box}',
+                                enabled: '{ucManualModel>RowIsNew}'
                             }),
                             ...sizes.map((size) => new sap.m.Input({
                                 value: `{ucManualModel>UcManualGenerationSize_${size}}`,
                                 type: 'Number',
-                                width: 'auto'
+                                width: 'auto',
+                                editable: '{ucManualModel>RowIsNew}'
                             }))
                         ]
                     })
+                });
+            },
+
+            _fillManualUcGenerationTableDynamically: function () {
+                const view = this.getView();
+                const model = view.getModel('getHandlingUnitsService');
+                const masterOrderData = view.getModel('masterOrderData')?.getData();
+
+                model.read('/HandlingUnit', {
+                    urlParameters: {
+                        $filter: `ZZ1_OrdemMestre_HUH eq '${masterOrderData.MasterProductionOrder.trim()}' and PackagingMaterial eq '${masterOrderData.Material.trim()}'`,
+                        $expand: 'to_HandlingUnitItem',
+                        $select: 'to_HandlingUnitItem/Material,to_HandlingUnitItem/HandlingUnitQuantity'
+                    },
+
+                    success: function (data) {
+                        const rows = [];
+                        const materials = [...new Set(data.results.map((result) => result.to_HandlingUnitItem.Material))];
+                        materials.forEach((material) => {
+                            let sizesIndex = 0;
+                            const newRow = { UnitsPerBox: 0, RecordSelected: false, RowIsNew: false, Box: material };
+                            data.results.filter((result) => result.to_HandlingUnitItem.Material === material).forEach(it => {
+                                const size = masterOrderData.Boxes[sizesIndex++]?.MaterialSize;
+                                newRow[`UcManualGenerationSize_${size}`] = it.HandlingUnitQuantity;
+                                newRow[`UcManualGenerationSizeOrder_${size}`] = masterOrderData.Boxes.find((box) => box.MaterialSize === size)?.SizeOrder;
+                            });
+                            rows.push(newRow);
+                        });
+                        view.setModel(new JSONModel(rows), 'ucManualModel');
+                    }
                 });
             },
 
@@ -186,7 +218,7 @@ sap.ui.define([
                     return;
                 }
 
-                const newRow = { UnitsPerBox: 0, RecordSelected: false };
+                const newRow = { UnitsPerBox: 0, RecordSelected: false, RowIsNew: true };
                 sizes.forEach(it => {
                     newRow[`UcManualGenerationSize_${it}`] = '0'
                     newRow[`UcManualGenerationSizeOrder_${it}`] = data.Boxes?.find((box) => box.MaterialSize === it)?.SizeOrder;
@@ -252,74 +284,63 @@ sap.ui.define([
                 view.setModel(new JSONModel(rows), 'quantityCheckModel');
             },
 
-            _runManualUcGeneration: function () {
+            _runManualUcGeneration: async function () {
                 const view = this.getView();
-                const model = this.getView().getModel();
+                const model = view.getModel('createHandlingUnitsService');
                 const data = view.getModel('masterOrderData')?.getData();
-                const items = (view.getModel('ucManualModel')?.getData() ?? []);
-                if (!data || items.length == 0) return;
+                const rows = view.getModel('ucManualModel')?.getData();
+                if (!data || !rows || rows.length === 0) return;
 
-                // const v4model = new sap.ui.model.odata.v4.ODataModel({
-                //     serviceUrl: 'https://s4dev2.grupokyly.com/sap/opu/odata4/sap/ZGKPP_DD_CONTAINER_CALC_SRV/srvd_a2x/sap/ZGKPP_DD_CONTAINER_CALC_SRV/0001/',
-                //     synchronizationMode: 'None',
+                const payloads = [];
+                rows.filter(row => row.RowIsNew).forEach(row => {
+                    const payload = ({
+                        HandlingUnitExternalID: '$1', // Fixed
+                        ZZ1_QuantidadeIdeal_HUH: `${row.UnitsPerBox}`,
+                        PackagingMaterial: data.Material.trim(),
+                        ZZ1_OrdemMestre_HUH: data.MasterProductionOrder.trim(),
+                        HandlingUnitItems: [],
+                        HuHeader_Response: [],
+                        HuItem_Response: [],
+                        Return_Messages: []
+                    });
 
-                // });
-                // teste
-                const v4model = this.getView().getModel('handlingUnits');
-                console.log(v4model);
+                    Object.getOwnPropertyNames(row).filter(it => it.includes('UcManualGenerationSize_')).forEach(it => {
+                        payload.HandlingUnitItems.push({
+                            HandlingUnitExternalID: '$1',
+                            Material: row.Box?.trim(),
+                            Plant: '1000', // Fixed
+                            HandlingUnitQuantity: row[it],
+                            _sequence: row[`UcManualGenerationSizeOrder_${it.replace('UcManualGenerationSize_', '').trim()}`],
+                        });
+                    });
 
-                model.read('/HandlingUnit', {
-                    // urlParameters: {},
-
-                    success: function (data) {
-                        console.log(data);
-                    },
-                    error: function (data) {
-                        console.log(data);
-                    }
+                    payloads.push(payload);
                 });
 
-                // const payload = ({
-                //     PackagingMaterial: data.Material.trim(),
-                //     Plant: '1000', // Fixed
-                //     _HandlingUnitItem: []
-                // });
+                try {
+                    for (const payload of payloads) {
+                        payload.HandlingUnitItems = payload.HandlingUnitItems.sort((a, b) => Number(a._sequence) - Number(b._sequence)).map(it => { delete it._sequence; return it; });
+                        await fetch( '/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/HandlingUnitSet', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json; charset=UTF-8',
+                                    'Accept': 'application/json',
+                                    'X-REQUESTED-WITH': 'XMLHttpRequest',
+                                },
+                                body: JSON.stringify(payload)
+                            }
+                        ).then(response => response.json()).then(data => {
+                            if (data.d.Return_Messages.results.length > 0) {
+                                throw data.d.Return_Messages.results.map(it => it.Message.trim()).join('\n');
+                            }
+                        });
+                    }
 
-                // items.forEach(item => {
-                //     for (var prop in item) {
-                //         if (prop.startsWith('UcManualGenerationSize_')) {
-                //             payload._HandlingUnitItem.push({
-                //                 Material: item.Box?.trim(),
-                //                 HandlingUnitQuantity: Number(item[prop]),
-                //                 HandlingUnitQuantityUnit: 'KG', // Fixed
-                //                 _sequence: item[`UcManualGenerationSizeOrder_${prop.replace('UcManualGenerationSize_', '').trim()}`],
-                //             });
-                //         }
-                //     }
-                // });
-
-                // payload._HandlingUnitItem = payload._HandlingUnitItem.sort((a, b) => Number(a.sequence) - Number(b.sequence)).map(it => { delete it._sequence; return it; });
-                // if (payload._HandlingUnitItem.length === 0) {
-                //     MessageToast.show('Nenhuma quantidade informada.');
-                //     return;
-                // }
-
-                // const listBinding = v4model.bindList('/HandlingUnit');
-                // listBinding.requestContexts().then(function (aContexts) {
-                //     console.log(aContexts);
-                //     aContexts.forEach(function (oContext) {
-                //         console.log(oContext);
-                //     });
-                // });
-
-                // model.create('https://s4dev2.grupokyly.com:443/sap/opu/odata4/sap/API_HANDLINGUNIT/srvd_a2x/sap/API_HANDLINGUNIT/0001/HandlingUnit', payload, {
-                //     success: function (data) {
-                //         MessageToast.show('Ordens de manuseio criadas com sucesso.');
-                //     },
-                //     error: function (data) {
-                //         MessageToast.show('Erro ao criar ordens de manuseio.');
-                //     }
-                // });
-            },
+                    MessageToast.show('Registros criados com sucesso!');
+                    rows.forEach(row => row.RowIsNew = false);
+                    view.setModel(new JSONModel(rows), 'ucManualModel');
+                }
+                catch (error) { MessageToast.show(`Erro ao criar registros: ${error}`); }
+            }
         });
     });

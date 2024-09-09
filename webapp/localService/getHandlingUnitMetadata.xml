@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0"
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="Measures" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI" />
+    </edmx:Reference>
+    <edmx:Reference
+        Uri="http://s4dev2.grupokyly.com/sap/opu/odata/iwfnd/catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='')/$value"
+        xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation" />
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="cds_api_handling_unit" xml:lang="pt" sap:schema-version="1"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm" />
+            <EntityType Name="HandlingUnitType" sap:label="Unidade comercial (obsoleta)"
+                sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="HandlingUnitExternalID" />
+                    <PropertyRef Name="Warehouse" />
+                </Key>
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" sap:display-format="UpperCase" sap:label="Unidade comercial"
+                    sap:quickinfo="Identificador externo da unidade comercial" sap:creatable="false"
+                    sap:updatable="false" />
+                <Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="4"
+                    sap:display-format="UpperCase" sap:label="Nº do depósito"
+                    sap:quickinfo="Nº do depósito/complexo de depósito" sap:creatable="false"
+                    sap:updatable="false" />
+                <Property Name="PackagingMaterial" Type="Edm.String" MaxLength="40"
+                    sap:display-format="UpperCase" sap:label="Mat.embal."
+                    sap:quickinfo="Material de embalagem" />
+                <Property Name="PackagingMaterialType" Type="Edm.String" MaxLength="4"
+                    sap:display-format="UpperCase" sap:label="Tipo mat.embalagem"
+                    sap:quickinfo="Tipo de material de embalagem" />
+                <Property Name="Plant" Type="Edm.String" MaxLength="4"
+                    sap:display-format="UpperCase" sap:label="Centro" />
+                <Property Name="StorageLocation" Type="Edm.String" MaxLength="4"
+                    sap:display-format="UpperCase" sap:label="Depósito" />
+                <Property Name="ShippingPoint" Type="Edm.String" MaxLength="4"
+                    sap:display-format="UpperCase" sap:label="Local expedição"
+                    sap:quickinfo="Local de expedição/ponto de recebimento" />
+                <Property Name="ParentHandlingUnitNumber" Type="Edm.String" MaxLength="20"
+                    sap:display-format="UpperCase" sap:label="Unidade comercial"
+                    sap:quickinfo="Identificador externo da unidade comercial" />
+                <Property Name="GrossWeight" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unit="WeightUnit" sap:label="Peso total"
+                    sap:quickinfo="Peso total da unidade comercial" />
+                <Property Name="NetWeight" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unit="WeightUnit" sap:label="Peso de carga"
+                    sap:quickinfo="Peso de carga da unidade comercial" />
+                <Property Name="HandlingUnitMaxWeight" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unit="WeightUnit" sap:label="Peso carga permit."
+                    sap:quickinfo="Peso de carga máximo permitido da unidade comercial" />
+                <Property Name="WeightUnit" Type="Edm.String" MaxLength="3"
+                    sap:label="Unidade de peso" sap:semantics="unit-of-measure" />
+                <Property Name="HandlingUnitTareWeight" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unit="HandlingUnitTareWeightUnit" sap:label="Massa líquida"
+                    sap:quickinfo="Tara da unidade comercial" />
+                <Property Name="HandlingUnitTareWeightUnit" Type="Edm.String" MaxLength="3"
+                    sap:label="Unidade de peso" sap:semantics="unit-of-measure" />
+                <Property Name="GrossVolume" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unit="VolumeUnit" sap:label="Volume total"
+                    sap:quickinfo="Volume total da unidade comercial" />
+                <Property Name="HandlingUnitNetVolume" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unit="VolumeUnit" sap:label="Volume de carga"
+                    sap:quickinfo="Volume de carga da unidade comercial" />
+                <Property Name="VolumeUnit" Type="Edm.String" MaxLength="3"
+                    sap:label="Unidade de volume" sap:semantics="unit-of-measure" />
+                <Property Name="HandlingUnitTareVolume" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unit="HandlingUnitTareVolumeUnit" sap:label="Volume líquido"
+                    sap:quickinfo="Volume líquido da unidade comercial" />
+                <Property Name="HandlingUnitTareVolumeUnit" Type="Edm.String" MaxLength="3"
+                    sap:label="Unidade de volume" sap:semantics="unit-of-measure" />
+                <Property Name="HandlingUnitLength" Type="Edm.Decimal" Precision="13" Scale="3"
+                    sap:unit="UnitOfMeasureDimension" sap:label="Comprimento" />
+                <Property Name="HandlingUnitWidth" Type="Edm.Decimal" Precision="13" Scale="3"
+                    sap:unit="UnitOfMeasureDimension" sap:label="Largura" />
+                <Property Name="HandlingUnitHeight" Type="Edm.Decimal" Precision="13" Scale="3"
+                    sap:unit="UnitOfMeasureDimension" sap:label="Altura" />
+                <Property Name="UnitOfMeasureDimension" Type="Edm.String" MaxLength="3"
+                    sap:label="Unidade de medida"
+                    sap:quickinfo="Unidade para comprimento/largura/altura"
+                    sap:semantics="unit-of-measure" />
+                <Property Name="HandlingUnitPackingObjectKey" Type="Edm.String" MaxLength="20"
+                    sap:display-format="UpperCase" sap:label="Chave de objeto"
+                    sap:quickinfo="Chave do objeto ao qual a unidade comercial está atribuída" />
+                <Property Name="HandlingUnitReferenceDocument" Type="Edm.String" MaxLength="10"
+                    sap:display-format="UpperCase" sap:label="Documento SD"
+                    sap:quickinfo="Número do documento de vendas e distribuição" />
+                <Property Name="CreatedByUser" Type="Edm.String" MaxLength="12"
+                    sap:display-format="UpperCase" sap:label="Criado por"
+                    sap:quickinfo="Nome do responsável que criou o objeto" />
+                <Property Name="CreationDateTime" Type="Edm.Decimal" Precision="15" Scale="0" />
+                <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="12"
+                    sap:display-format="UpperCase" sap:label="Modificado por"
+                    sap:quickinfo="Nome do responsável pela modificação do objeto" />
+                <Property Name="LastChangeDateTime" Type="Edm.Decimal" Precision="15" Scale="0" />
+                <Property Name="HandlingUnitProcessStatus" Type="Edm.String" MaxLength="1"
+                    sap:display-format="UpperCase" sap:label="St.processo UC"
+                    sap:quickinfo="Status de processo de unidade comercial" />
+                <Property Name="StorageType" Type="Edm.String" MaxLength="4"
+                    sap:display-format="UpperCase" sap:label="Tipo de depósito" />
+                <Property Name="StorageSection" Type="Edm.String" MaxLength="4"
+                    sap:display-format="UpperCase" sap:label="Área armazmto."
+                    sap:quickinfo="Área de armazenamento" />
+                <Property Name="StorageBin" Type="Edm.String" MaxLength="18"
+                    sap:display-format="UpperCase" sap:label="Posição no depósito" />
+                <Property Name="ZZ1_OrdemMestre_HUH" Type="Edm.String" MaxLength="12"
+                    sap:display-format="NonNegative" sap:label="Ordem Mestre" />
+                <Property Name="ZZ1_QuantidadeIdeal_HUH" Type="Edm.Decimal" Precision="3" Scale="0"
+                    sap:label="Quantidade Ideal" />
+                <Property Name="ZZ1_OrdemdeProduo_HUH" Type="Edm.String" MaxLength="12"
+                    sap:display-format="NonNegative" sap:label="Ordem de Produção" />
+                <Property Name="ZZ1_Torre_HUH" Type="Edm.Decimal" Precision="3" Scale="0"
+                    sap:label="Torre" />
+                <Property Name="ZZ1_EndereoAnterior_HUH" Type="Edm.String" MaxLength="40"
+                    sap:label="Endereço Anterior" />
+                <Property Name="ZZ1_EndereoAtual_HUH" Type="Edm.String" MaxLength="40"
+                    sap:label="Endereço Atual" />
+                <NavigationProperty Name="to_HandlingUnitItem"
+                    Relationship="cds_api_handling_unit.assoc_6E94EEB89F78F6AD7FC869F4960B559B"
+                    FromRole="FromRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B"
+                    ToRole="ToRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B" />
+            </EntityType>
+            <EntityType Name="HandlingUnitItemType"
+                sap:label="Itens de unidade comercial (obsoleto)" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="HandlingUnitExternalID" />
+                    <PropertyRef Name="Warehouse" />
+                    <PropertyRef Name="StockItemUUID" />
+                </Key>
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" sap:display-format="UpperCase" sap:label="Unidade comercial"
+                    sap:quickinfo="Identificador externo da unidade comercial" sap:creatable="false"
+                    sap:updatable="false" />
+                <Property Name="Warehouse" Type="Edm.String" Nullable="false" MaxLength="4"
+                    sap:display-format="UpperCase" sap:label="Nº do depósito"
+                    sap:quickinfo="Nº do depósito/complexo de depósito" sap:creatable="false"
+                    sap:updatable="false" />
+                <Property Name="StockItemUUID" Type="Edm.Guid" Nullable="false"
+                    sap:label="GUID estoque" sap:quickinfo="GUID item do estoque" />
+                <Property Name="HandlingUnitItem" Type="Edm.String" MaxLength="6"
+                    sap:display-format="NonNegative" sap:label="Item UC"
+                    sap:quickinfo="Item de unidade comercial" />
+                <Property Name="HandlingUnitReferenceDocument" Type="Edm.String" MaxLength="10"
+                    sap:display-format="UpperCase" sap:label="Remessa" />
+                <Property Name="HandlingUnitRefDocumentItem" Type="Edm.String" MaxLength="10" />
+                <Property Name="HandlingUnitQuantity" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unit="HandlingUnitQuantityUnit" sap:label="Quantidade embalada"
+                    sap:quickinfo="Qtd.básica embalada no item de unidade comercial" />
+                <Property Name="HandlingUnitQuantityUnit" Type="Edm.String" MaxLength="3"
+                    sap:label="UM unidade comercial"
+                    sap:quickinfo="UM básica da quantidade embalada (VEMNG)"
+                    sap:semantics="unit-of-measure" />
+                <Property Name="HandlingUnitAltUnitOfMeasure" Type="Edm.String" MaxLength="3"
+                    sap:label="Unidade de medida"
+                    sap:quickinfo="Unidade de medida alternativa para unidade de medida estoque"
+                    sap:semantics="unit-of-measure" />
+                <Property Name="Material" Type="Edm.String" MaxLength="40"
+                    sap:display-format="UpperCase" sap:label="Material"
+                    sap:quickinfo="Nº do material" />
+                <Property Name="ShelfLifeExpirationDate" Type="Edm.DateTime" Precision="0"
+                    sap:display-format="Date" sap:label="Data do vencimento" />
+                <Property Name="HandlingUnitGoodsReceiptDate" Type="Edm.DateTime" Precision="0"
+                    sap:display-format="Date" sap:label="Data EM"
+                    sap:quickinfo="Data da entrada de mercadorias" />
+                <NavigationProperty Name="to_HandlingUnit"
+                    Relationship="cds_api_handling_unit.assoc_6E94EEB89F78F6AD7FC869F4960B559B"
+                    FromRole="ToRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B"
+                    ToRole="FromRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B" />
+            </EntityType>
+            <Association Name="assoc_6E94EEB89F78F6AD7FC869F4960B559B" sap:content-version="1">
+                <End Type="cds_api_handling_unit.HandlingUnitType" Multiplicity="1"
+                    Role="FromRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B">
+                    <OnDelete Action="Cascade" />
+                </End>
+                <End Type="cds_api_handling_unit.HandlingUnitItemType" Multiplicity="*"
+                    Role="ToRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B" />
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B">
+                        <PropertyRef Name="Warehouse" />
+                        <PropertyRef Name="HandlingUnitExternalID" />
+                    </Principal>
+                    <Dependent Role="ToRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B">
+                        <PropertyRef Name="Warehouse" />
+                        <PropertyRef Name="HandlingUnitExternalID" />
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="cds_api_handling_unit_Entities" m:IsDefaultEntityContainer="true"
+                sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="HandlingUnit" EntityType="cds_api_handling_unit.HandlingUnitType"
+                    sap:creatable="false" sap:updatable="false" sap:deletable="false"
+                    sap:content-version="1" />
+                <EntitySet Name="HandlingUnitItem"
+                    EntityType="cds_api_handling_unit.HandlingUnitItemType" sap:creatable="false"
+                    sap:updatable="false" sap:deletable="false" sap:content-version="1" />
+                <AssociationSet Name="assoc_6E94EEB89F78F6AD7FC869F4960B559B"
+                    Association="cds_api_handling_unit.assoc_6E94EEB89F78F6AD7FC869F4960B559B"
+                    sap:creatable="false" sap:updatable="false" sap:deletable="false"
+                    sap:content-version="1">
+                    <End EntitySet="HandlingUnit"
+                        Role="FromRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B" />
+                    <End EntitySet="HandlingUnitItem"
+                        Role="ToRole_assoc_6E94EEB89F78F6AD7FC869F4960B559B" />
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations Target="cds_api_handling_unit.cds_api_handling_unit_Entities"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true" />
+            </Annotations>
+            <Annotations Target="cds_api_handling_unit.HandlingUnitType/to_HandlingUnitItem"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Composition" />
+            </Annotations>
+            <Annotations Target="cds_api_handling_unit.cds_api_handling_unit_Entities/HandlingUnit"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection />
+                </Annotation>
+            </Annotations>
+            <Annotations
+                Target="cds_api_handling_unit.cds_api_handling_unit_Entities/HandlingUnitItem"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="SAP__core.OptimisticConcurrency">
+                    <Collection />
+                </Annotation>
+            </Annotations>
+            <Annotations Target="cds_api_handling_unit.cds_api_handling_unit_Entities"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Org.OData.Capabilities.V1.BatchSupport">
+                    <Record Type="Org.OData.Capabilities.V1.BatchSupportType">
+                        <PropertyValue Property="ReferencesAcrossChangeSetsSupported" Bool="true" />
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self"
+                href="http://s4dev2.grupokyly.com/sap/opu/odata/sap/API_HANDLING_UNIT/$metadata"
+                xmlns:atom="http://www.w3.org/2005/Atom" />
+            <atom:link rel="latest-version"
+                href="http://s4dev2.grupokyly.com/sap/opu/odata/sap/API_HANDLING_UNIT/$metadata"
+                xmlns:atom="http://www.w3.org/2005/Atom" />
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,637 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0"
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZAPI_HU_MAINTAIN_SRV" xml:lang="pt" sap:schema-version="1"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0"
+                xmlns="http://docs.oasis-open.org/odata/ns/edm" />
+            <EntityType Name="HandlingUnitItems" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="HandlingUnitExternalID" />
+                </Key>
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" sap:unicode="false" sap:label="UC int." sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Material" Type="Edm.String" MaxLength="18" sap:unicode="false"
+                    sap:label="Material" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Plant" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Centro" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="StorageLocation" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Depósito" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HandlingUnitQuantity" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Qtd.embalada" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="HandlingUnitQuantityUnit" Type="Edm.String" MaxLength="3"
+                    sap:unicode="false" sap:label="UM item UC" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="HandlingUnit" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="HandlingUnitExternalID" />
+                </Key>
+                <Property Name="HandlingUnitExternalID" Type="Edm.String" Nullable="false"
+                    MaxLength="20" sap:unicode="false" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HandlingUnitDelete" Type="Edm.String" MaxLength="1"
+                    sap:unicode="false" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackagingMaterial" Type="Edm.String" MaxLength="18"
+                    sap:unicode="false" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ZZ1_OrdemdeProduo_HUH" Type="Edm.String" sap:unicode="false"
+                    sap:creatable="false" sap:updatable="false" sap:sortable="false"
+                    sap:filterable="false" />
+                <Property Name="ZZ1_Torre_HUH" Type="Edm.Decimal" Precision="3" Scale="0"
+                    sap:unicode="false" sap:label="Torre" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="ZZ1_QuantidadeIdeal_HUH" Type="Edm.Decimal" Precision="3" Scale="0"
+                    sap:unicode="false" sap:label="Quantidade Ideal" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="ZZ1_EndereoAtual_HUH" Type="Edm.String" sap:unicode="false"
+                    sap:creatable="false" sap:updatable="false" sap:sortable="false"
+                    sap:filterable="false" />
+                <Property Name="ZZ1_OrdemMestre_HUH" Type="Edm.String" sap:unicode="false"
+                    sap:creatable="false" sap:updatable="false" sap:sortable="false"
+                    sap:filterable="false" />
+                <Property Name="ZZ1_EndereoAnterior_HUH" Type="Edm.String" sap:unicode="false"
+                    sap:creatable="false" sap:updatable="false" sap:sortable="false"
+                    sap:filterable="false" />
+                <NavigationProperty Name="HandlingUnitItems"
+                    Relationship="ZAPI_HU_MAINTAIN_SRV.Header_Item" FromRole="FromRole_Header_Item"
+                    ToRole="ToRole_Header_Item" />
+                <NavigationProperty Name="HuItem_Response"
+                    Relationship="ZAPI_HU_MAINTAIN_SRV.Item_Response"
+                    FromRole="FromRole_Item_Response" ToRole="ToRole_Item_Response" />
+                <NavigationProperty Name="Return_Messages"
+                    Relationship="ZAPI_HU_MAINTAIN_SRV.Message_Response"
+                    FromRole="FromRole_Message_Response" ToRole="ToRole_Message_Response" />
+                <NavigationProperty Name="HuHeader_Response"
+                    Relationship="ZAPI_HU_MAINTAIN_SRV.Header_Response"
+                    FromRole="FromRole_Header_Response" ToRole="ToRole_Header_Response" />
+            </EntityType>
+            <EntityType Name="HuItem_Response" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="HuItemNumber" />
+                    <PropertyRef Name="HuExid" />
+                </Key>
+                <Property Name="Client" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Mandante" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuItemNumber" Type="Edm.String" Nullable="false" MaxLength="6"
+                    sap:unicode="false" sap:label="Item UC" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuItemType" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="Tipo de item" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ObjectDoc" Type="Edm.String" MaxLength="10" sap:unicode="false"
+                    sap:label="Nº documento" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ObjItemNumber" Type="Edm.String" MaxLength="6" sap:unicode="false"
+                    sap:label="Item" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackQty" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Qtd.embalada" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackQtyFloat" Type="Edm.Double" sap:unicode="false"
+                    sap:label="Campo interno / não utilizar / LGMNG em Float / MUM"
+                    sap:creatable="false" sap:updatable="false" sap:sortable="false"
+                    sap:filterable="false" />
+                <Property Name="BaseUnitQtyIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="UM item ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="BaseUnitQty" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="UM item UC" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="AltUnitQtyIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unid.medida ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="LowerLevelExid" Type="Edm.String" MaxLength="20" sap:unicode="false"
+                    sap:label="Unid.comercial" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="AltUnitQty" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade medida" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="NumberPackMat" Type="Edm.Int32" sap:unicode="false"
+                    sap:label="NúmMatsAE" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="FlagSuplmtItem" Type="Edm.Boolean" sap:unicode="false"
+                    sap:label="Item suplem." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Material" Type="Edm.String" MaxLength="18" sap:unicode="false"
+                    sap:label="Material" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Batch" Type="Edm.String" MaxLength="10" sap:unicode="false"
+                    sap:label="Lote" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Plant" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Centro" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="StgeLoc" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Depósito" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="IntObjNo" Type="Edm.String" MaxLength="18" sap:unicode="false"
+                    sap:label="Nº int.obj." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="StockCat" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="Tipo estoque" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="SpecStock" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="Estq.especial" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="SpStckNo" Type="Edm.String" MaxLength="16" sap:unicode="false"
+                    sap:label="Nº estoque esp." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Insplot" Type="Edm.String" MaxLength="12" sap:unicode="false"
+                    sap:label="Lote controle" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="NoOfSerialNumbers" Type="Edm.Int32" sap:unicode="false"
+                    sap:label="Núm.nºs série" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="SernoProf" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="PerfilNºs série" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ItemCateg" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Ctg.item" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaterialPartner" Type="Edm.String" MaxLength="35"
+                    sap:unicode="false" sap:label="Material parc." sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatType" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Tp.mat.embalag." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatName" Type="Edm.String" MaxLength="40" sap:unicode="false"
+                    sap:label="Descrição" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Expirydate" Type="Edm.DateTime" Precision="7" sap:unicode="false"
+                    sap:label="Data vencimento" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="GrDate" Type="Edm.DateTime" Precision="7" sap:unicode="false"
+                    sap:label="Data EM" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuExid" Type="Edm.String" Nullable="false" MaxLength="20"
+                    sap:unicode="false" sap:label="Unid.comercial" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaterialExternal" Type="Edm.String" MaxLength="40"
+                    sap:unicode="false" sap:label="Nº do material" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaterialGuid" Type="Edm.String" MaxLength="32" sap:unicode="false"
+                    sap:label="GUID (externo)" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaterialVersion" Type="Edm.String" MaxLength="10"
+                    sap:unicode="false" sap:label="Nº da versão" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="StockSegment" Type="Edm.String" MaxLength="16" sap:unicode="false"
+                    sap:label="Segmento de estoque" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaterialLong" Type="Edm.String" MaxLength="40" sap:unicode="false"
+                    sap:label="Material" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="StkSegLong" Type="Edm.String" MaxLength="40" sap:unicode="false"
+                    sap:label="Segmento de estoque" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="Return_Messages" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Number" />
+                </Key>
+                <Property Name="Type" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="Tipo mensagem" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Id" Type="Edm.String" MaxLength="20" sap:unicode="false"
+                    sap:label="Classe de mensagem" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Number" Type="Edm.String" Nullable="false" MaxLength="3"
+                    sap:unicode="false" sap:label="Nº mensagem" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Message" Type="Edm.String" MaxLength="220" sap:unicode="false"
+                    sap:label="Txt.mensagem" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="LogNo" Type="Edm.String" MaxLength="20" sap:unicode="false"
+                    sap:label="Nº do log" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="LogMsgNo" Type="Edm.String" MaxLength="6" sap:unicode="false"
+                    sap:label="Nº mensagem" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MessageV1" Type="Edm.String" MaxLength="50" sap:unicode="false"
+                    sap:label="Variável mensagens" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MessageV2" Type="Edm.String" MaxLength="50" sap:unicode="false"
+                    sap:label="Variável mensagens" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MessageV3" Type="Edm.String" MaxLength="50" sap:unicode="false"
+                    sap:label="Variável mensagens" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MessageV4" Type="Edm.String" MaxLength="50" sap:unicode="false"
+                    sap:label="Variável mensagens" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Parameter" Type="Edm.String" MaxLength="32" sap:unicode="false"
+                    sap:label="Nome parâmetro" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Row" Type="Edm.Int32" sap:unicode="false"
+                    sap:label="Linha parâmetro" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Field" Type="Edm.String" MaxLength="30" sap:unicode="false"
+                    sap:label="Nome do campo" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="System" Type="Edm.String" MaxLength="10" sap:unicode="false"
+                    sap:label="Sistema lógico" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <EntityType Name="HuHeader_Response" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="HuExid" />
+                </Key>
+                <Property Name="Client" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Mandante" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuId" Type="Edm.String" MaxLength="10" sap:unicode="false"
+                    sap:label="UC int." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuExid" Type="Edm.String" Nullable="false" MaxLength="20"
+                    sap:unicode="false" sap:label="Unid.comercial" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuExidType" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="Tipo ID" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ShipPoint" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Local expedição" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="LoadingPoint" Type="Edm.String" MaxLength="2" sap:unicode="false"
+                    sap:label="Pto.carrgmto." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="TotalWght" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Peso total" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="LoadWght" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Peso de carga" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TareWght" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Massa líquida" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="UnitOfWtIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unid.peso ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="UnitOfWt" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade de peso" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="AllowedWght" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Peso admis." sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaxUnitOfWghtIso" Type="Edm.String" MaxLength="3"
+                    sap:unicode="false" sap:label="Unid.peso ISO" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaxUnitOfWght" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade de peso" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="TotalVol" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Volume total" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="LoadVol" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Volume de carga" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TareVol" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Volume líquido" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="VolumeunitIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unid.volume ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Volumeunit" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade volume" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="AllowedVol" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Vol.permitido" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaxVolUnitIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unid.volume ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MaxVolUnit" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade volume" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="NoSimilarPackMat" Type="Edm.Int32" sap:unicode="false"
+                    sap:label="Semelhantes" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="CreatedBy" Type="Edm.String" MaxLength="12" sap:unicode="false"
+                    sap:label="Criado por" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="CreatedDate" Type="Edm.DateTime" Precision="7" sap:unicode="false"
+                    sap:label="Criado em" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="CreatedTime" Type="Edm.Time" Precision="0" sap:unicode="false"
+                    sap:label="Hora registro" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ChangedBy" Type="Edm.String" MaxLength="12" sap:unicode="false"
+                    sap:label="Modificado por" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ChangedDate" Type="Edm.DateTime" Precision="7" sap:unicode="false"
+                    sap:label="Modificado em" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ChangedTime" Type="Edm.Time" Precision="0" sap:unicode="false"
+                    sap:label="Hora modif." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="SortFld" Type="Edm.String" MaxLength="10" sap:unicode="false"
+                    sap:label="Crit.pesq." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuGrp1" Type="Edm.String" MaxLength="5" sap:unicode="false"
+                    sap:label="Grupo de UCs 1" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuGrp2" Type="Edm.String" MaxLength="5" sap:unicode="false"
+                    sap:label="Grupo de UCs 2" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuGrp3" Type="Edm.String" MaxLength="5" sap:unicode="false"
+                    sap:label="Grupo de UCs 3" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuGrp4" Type="Edm.String" MaxLength="5" sap:unicode="false"
+                    sap:label="Grupo de UCs 4" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuGrp5" Type="Edm.String" MaxLength="5" sap:unicode="false"
+                    sap:label="Grupo de UCs 5" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMat" Type="Edm.String" MaxLength="18" sap:unicode="false"
+                    sap:label="Mat.embal." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Lenght" Type="Edm.Decimal" Precision="13" Scale="3"
+                    sap:unicode="false" sap:label="Comprimento" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Width" Type="Edm.Decimal" Precision="13" Scale="3"
+                    sap:unicode="false" sap:label="Largura" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="Height" Type="Edm.Decimal" Precision="13" Scale="3"
+                    sap:unicode="false" sap:label="Altura" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="UnitDimIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="UnitDim" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="StatusObsolet" Type="Edm.Boolean" sap:unicode="false"
+                    sap:label="Status" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="WghtTolHu" Type="Edm.Decimal" Precision="3" Scale="1"
+                    sap:unicode="false" sap:label="Toler.excesso-peso" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="VolTolHu" Type="Edm.Decimal" Precision="3" Scale="1"
+                    sap:unicode="false" sap:label="Tol.excesso volume" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="BaseUomIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="UM bás.ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="BaseUom" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="UM básica" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="Content" Type="Edm.String" MaxLength="40" sap:unicode="false"
+                    sap:label="Conteúdo" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatType" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Tp.mat.embalag." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="MatGrpSm" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Grp.mats. ME" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Plant" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Centro" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ItemCateg" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Ctg.item" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Salesorg" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Org.vendas" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="DcCustomMat" Type="Edm.String" MaxLength="2" sap:unicode="false"
+                    sap:label="Can.dist.Cliente/Mat" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="LgthLoad" Type="Edm.Decimal" Precision="6" Scale="0"
+                    sap:unicode="false" sap:label="ComprPltCa" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="LgthLoadUnitIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="LgthLoadUnit" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="UnidComprimento" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="TravelTime" Type="Edm.Decimal" Precision="3" Scale="0"
+                    sap:unicode="false" sap:label="DurTrnsp" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TravelTimeUnitIso" Type="Edm.String" MaxLength="3"
+                    sap:unicode="false" sap:label="Unidade ISO" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="TravelTimeUnit" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unid.tmp.trnsp." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="Distance" Type="Edm.Decimal" Precision="6" Scale="0"
+                    sap:unicode="false" sap:label="Distância" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="UnitOfDistIso" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidade ISO" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="UnitOfDist" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Unidad.distânc." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure" />
+                <Property Name="StgeLoc" Type="Edm.String" MaxLength="4" sap:unicode="false"
+                    sap:label="Depósito" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="WghtVolFix" Type="Edm.Boolean" sap:unicode="false"
+                    sap:label="Peso/vol.fixos" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatCat" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="Ctg.mat.emb." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ExtIdHu2" Type="Edm.String" MaxLength="20" sap:unicode="false"
+                    sap:label="Ident. UC 2" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="CntryShpMatIso" Type="Edm.String" MaxLength="2" sap:unicode="false"
+                    sap:label="ISO P/Reg.MT" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="CntryShpMat" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="P/R que forn.MT" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="NationalityDriverIso" Type="Edm.String" MaxLength="2"
+                    sap:unicode="false" sap:label="ISO orig.motorista" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="NationalityDriver" Type="Edm.String" MaxLength="3"
+                    sap:unicode="false" sap:label="Orig.motorista" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="NameDriver" Type="Edm.String" MaxLength="35" sap:unicode="false"
+                    sap:label="Motorista" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="NameCoDriver" Type="Edm.String" MaxLength="35" sap:unicode="false"
+                    sap:label="2º motorista" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatCustomer" Type="Edm.String" MaxLength="35"
+                    sap:unicode="false" sap:label="Mat.emb.cliente" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatObject" Type="Edm.String" MaxLength="2" sap:unicode="false"
+                    sap:label="Objeto embal." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatObjKey" Type="Edm.String" MaxLength="20" sap:unicode="false"
+                    sap:label="Objeto" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="Handle" Type="Edm.Guid" sap:unicode="false" sap:label="Handle"
+                    sap:creatable="false" sap:updatable="false" sap:sortable="false"
+                    sap:filterable="false" />
+                <Property Name="ContainerStat" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="St.container" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="WarehouseNumber" Type="Edm.String" MaxLength="3" sap:unicode="false"
+                    sap:label="Nº depósito" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="ClosedBox" Type="Edm.Boolean" sap:unicode="false"
+                    sap:label="fechado" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="FlagPackgLvDangGoods" Type="Edm.Boolean" sap:unicode="false"
+                    sap:label="Relev.para PP" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="FlagPackgLvPrint" Type="Edm.Boolean" sap:unicode="false"
+                    sap:label="Rel.p/impressão" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="HigherLevelHu" Type="Edm.String" MaxLength="10" sap:unicode="false"
+                    sap:label="UC superior" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackgInstruct" Type="Edm.String" MaxLength="20" sap:unicode="false"
+                    sap:label="Norma embalagem" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="LPackgStatusHu" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="Stat.emb.local" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="FlagNoExtLable" Type="Edm.Boolean" sap:unicode="false"
+                    sap:label="Sem etiq.expedição" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PermissWorkload" Type="Edm.Decimal" Precision="15" Scale="3"
+                    sap:unicode="false" sap:label="Carga permitida" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="HuStorLoc" Type="Edm.String" MaxLength="1" sap:unicode="false"
+                    sap:label="Depósito UC" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatName" Type="Edm.String" MaxLength="40" sap:unicode="false"
+                    sap:label="Descrição" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatExternal" Type="Edm.String" MaxLength="40"
+                    sap:unicode="false" sap:label="Nº do material" sap:creatable="false"
+                    sap:updatable="false" sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatGuid" Type="Edm.String" MaxLength="32" sap:unicode="false"
+                    sap:label="GUID (externo)" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatVersion" Type="Edm.String" MaxLength="10" sap:unicode="false"
+                    sap:label="Nº da versão" sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+                <Property Name="PackMatLong" Type="Edm.String" MaxLength="40" sap:unicode="false"
+                    sap:label="Mat.embal." sap:creatable="false" sap:updatable="false"
+                    sap:sortable="false" sap:filterable="false" />
+            </EntityType>
+            <Association Name="Item_Response" sap:content-version="1">
+                <End Type="ZAPI_HU_MAINTAIN_SRV.HandlingUnit" Multiplicity="1"
+                    Role="FromRole_Item_Response" />
+                <End Type="ZAPI_HU_MAINTAIN_SRV.HuItem_Response" Multiplicity="*"
+                    Role="ToRole_Item_Response" />
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Item_Response">
+                        <PropertyRef Name="HandlingUnitExternalID" />
+                    </Principal>
+                    <Dependent Role="ToRole_Item_Response">
+                        <PropertyRef Name="HuExid" />
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Message_Response" sap:content-version="1">
+                <End Type="ZAPI_HU_MAINTAIN_SRV.HandlingUnit" Multiplicity="1"
+                    Role="FromRole_Message_Response" />
+                <End Type="ZAPI_HU_MAINTAIN_SRV.Return_Messages" Multiplicity="*"
+                    Role="ToRole_Message_Response" />
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Message_Response">
+                        <PropertyRef Name="HandlingUnitExternalID" />
+                    </Principal>
+                    <Dependent Role="ToRole_Message_Response">
+                        <PropertyRef Name="Id" />
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Header_Response" sap:content-version="1">
+                <End Type="ZAPI_HU_MAINTAIN_SRV.HandlingUnit" Multiplicity="1"
+                    Role="FromRole_Header_Response" />
+                <End Type="ZAPI_HU_MAINTAIN_SRV.HuHeader_Response" Multiplicity="*"
+                    Role="ToRole_Header_Response" />
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Header_Response">
+                        <PropertyRef Name="HandlingUnitExternalID" />
+                    </Principal>
+                    <Dependent Role="ToRole_Header_Response">
+                        <PropertyRef Name="HuExid" />
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Header_Item" sap:content-version="1">
+                <End Type="ZAPI_HU_MAINTAIN_SRV.HandlingUnit" Multiplicity="1"
+                    Role="FromRole_Header_Item" />
+                <End Type="ZAPI_HU_MAINTAIN_SRV.HandlingUnitItems" Multiplicity="*"
+                    Role="ToRole_Header_Item" />
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Header_Item">
+                        <PropertyRef Name="HandlingUnitExternalID" />
+                    </Principal>
+                    <Dependent Role="ToRole_Header_Item">
+                        <PropertyRef Name="HandlingUnitExternalID" />
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZAPI_HU_MAINTAIN_SRV_Entities" m:IsDefaultEntityContainer="true"
+                sap:supported-formats="atom json xlsx">
+                <EntitySet Name="HandlingUnitItemsSet"
+                    EntityType="ZAPI_HU_MAINTAIN_SRV.HandlingUnitItems" sap:creatable="false"
+                    sap:updatable="false" sap:deletable="false" sap:pageable="false"
+                    sap:content-version="1" />
+                <EntitySet Name="HandlingUnitSet" EntityType="ZAPI_HU_MAINTAIN_SRV.HandlingUnit"
+                    sap:creatable="false" sap:updatable="false" sap:deletable="false"
+                    sap:pageable="false" sap:addressable="false" sap:content-version="1" />
+                <EntitySet Name="HuItem_ResponseSet"
+                    EntityType="ZAPI_HU_MAINTAIN_SRV.HuItem_Response" sap:creatable="false"
+                    sap:updatable="false" sap:deletable="false" sap:pageable="false"
+                    sap:content-version="1" />
+                <EntitySet Name="Return_MessagesSet"
+                    EntityType="ZAPI_HU_MAINTAIN_SRV.Return_Messages" sap:creatable="false"
+                    sap:updatable="false" sap:deletable="false" sap:pageable="false"
+                    sap:content-version="1" />
+                <EntitySet Name="HuHeader_ResponseSet"
+                    EntityType="ZAPI_HU_MAINTAIN_SRV.HuHeader_Response" sap:creatable="false"
+                    sap:updatable="false" sap:deletable="false" sap:pageable="false"
+                    sap:content-version="1" />
+                <AssociationSet Name="Item_ResponseSet"
+                    Association="ZAPI_HU_MAINTAIN_SRV.Item_Response" sap:creatable="false"
+                    sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="HandlingUnitSet" Role="FromRole_Item_Response" />
+                    <End EntitySet="HuItem_ResponseSet" Role="ToRole_Item_Response" />
+                </AssociationSet>
+                <AssociationSet Name="Message_ResponseSet"
+                    Association="ZAPI_HU_MAINTAIN_SRV.Message_Response" sap:creatable="false"
+                    sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="HandlingUnitSet" Role="FromRole_Message_Response" />
+                    <End EntitySet="Return_MessagesSet" Role="ToRole_Message_Response" />
+                </AssociationSet>
+                <AssociationSet Name="Header_ItemSet" Association="ZAPI_HU_MAINTAIN_SRV.Header_Item"
+                    sap:creatable="false" sap:updatable="false" sap:deletable="false"
+                    sap:content-version="1">
+                    <End EntitySet="HandlingUnitSet" Role="FromRole_Header_Item" />
+                    <End EntitySet="HandlingUnitItemsSet" Role="ToRole_Header_Item" />
+                </AssociationSet>
+                <AssociationSet Name="Header_ResponseSet"
+                    Association="ZAPI_HU_MAINTAIN_SRV.Header_Response" sap:creatable="false"
+                    sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="HandlingUnitSet" Role="FromRole_Header_Response" />
+                    <End EntitySet="HuHeader_ResponseSet" Role="ToRole_Header_Response" />
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self"
+                href="http://s4dev2.grupokyly.com/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/$metadata"
+                xmlns:atom="http://www.w3.org/2005/Atom" />
+            <atom:link rel="latest-version"
+                href="http://s4dev2.grupokyly.com/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/$metadata"
+                xmlns:atom="http://www.w3.org/2005/Atom" />
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
