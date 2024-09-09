@@ -45,15 +45,13 @@ sap.ui.define([
                         view.setModel(new JSONModel({
                             MasterProductionOrder: data.results[0]?.MasterProductionOrder,
                             Material: data.results[0]?.Material,
-                            Boxes: data.results[0]?.to_Boxes?.results?.map(box => {
-                                return {
-                                    MaterialSize: box.MaterialSize,
-                                    SizeOrder: box.SizeOrder,
-                                    Box: box.Box,
-                                    BoxDescription: box.BoxDescription,
-                                    Quantity: box.Quantity
-                                }
-                            })
+                            Boxes: data.results[0]?.to_Boxes?.results?.map(box => { return {
+                                MaterialSize: box.MaterialSize,
+                                SizeOrder: box.SizeOrder,
+                                Box: box.Box,
+                                BoxDescription: box.BoxDescription,
+                                Quantity: box.Quantity
+                            }})
                         }), 'masterOrderData');
 
                         this._buildBoxCapacityTableDynamically();
@@ -101,7 +99,7 @@ sap.ui.define([
                 });
             },
 
-            _fillBoxCapacityTableDynamically: function (masterOrder) {
+            _fillBoxCapacityTableDynamically: function () {
                 const view = this.getView();
                 const data = view.getModel('masterOrderData').getData();
 
@@ -188,20 +186,17 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `ZZ1_OrdemMestre_HUH eq '${masterOrderData.MasterProductionOrder.trim()}' and PackagingMaterial eq '${masterOrderData.Material.trim()}'`,
                         $expand: 'to_HandlingUnitItem',
-                        $select: 'to_HandlingUnitItem/Material,to_HandlingUnitItem/HandlingUnitQuantity'
+                        $select: 'HandlingUnitExternalID,to_HandlingUnitItem/Material,to_HandlingUnitItem/HandlingUnitQuantity',
+                        $orderby: 'HandlingUnitExternalID desc'
                     },
 
                     success: function (data) {
                         const rows = [];
-                        const materials = [...new Set(data.results.map((result) => result.to_HandlingUnitItem.Material))];
-                        materials.forEach((material) => {
-                            let sizesIndex = 0;
-                            const newRow = { UnitsPerBox: 0, RecordSelected: false, RowIsNew: false, Box: material };
-                            data.results.filter((result) => result.to_HandlingUnitItem.Material === material).forEach(it => {
-                                const size = masterOrderData.Boxes[sizesIndex++]?.MaterialSize;
-                                newRow[`UcManualGenerationSize_${size}`] = it.HandlingUnitQuantity;
-                                newRow[`UcManualGenerationSizeOrder_${size}`] = masterOrderData.Boxes.find((box) => box.MaterialSize === size)?.SizeOrder;
-                            });
+                        data.results.forEach(it => {
+                            const newRow = { UnitsPerBox: 0, RecordSelected: false, RowIsNew: false, Box: it.Material, HandlingUnitExternalID: it.HandlingUnitExternalID };
+                            const size = masterOrderData.Boxes[sizesIndex++]?.MaterialSize;
+                            newRow[`UcManualGenerationSize_${size}`] = it.HandlingUnitQuantity;
+                            newRow[`UcManualGenerationSizeOrder_${size}`] = masterOrderData.Boxes.find((box) => box.MaterialSize === size)?.SizeOrder;
                             rows.push(newRow);
                         });
                         view.setModel(new JSONModel(rows), 'ucManualModel');
@@ -320,16 +315,15 @@ sap.ui.define([
                 try {
                     for (const payload of payloads) {
                         payload.HandlingUnitItems = payload.HandlingUnitItems.sort((a, b) => Number(a._sequence) - Number(b._sequence)).map(it => { delete it._sequence; return it; });
-                        await fetch( '/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/HandlingUnitSet', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json; charset=UTF-8',
-                                    'Accept': 'application/json',
-                                    'X-REQUESTED-WITH': 'XMLHttpRequest',
-                                },
-                                body: JSON.stringify(payload)
-                            }
-                        ).then(response => response.json()).then(data => {
+                        await fetch('/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/HandlingUnitSet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json; charset=UTF-8',
+                                'Accept': 'application/json',
+                                'X-REQUESTED-WITH': 'XMLHttpRequest',
+                            },
+                            body: JSON.stringify(payload)
+                        }).then(response => response.json()).then(data => {
                             if (data.d.Return_Messages.results.length > 0) {
                                 throw data.d.Return_Messages.results.map(it => it.Message.trim()).join('\n');
                             }
@@ -337,8 +331,7 @@ sap.ui.define([
                     }
 
                     MessageToast.show('Registros criados com sucesso!');
-                    rows.forEach(row => row.RowIsNew = false);
-                    view.setModel(new JSONModel(rows), 'ucManualModel');
+                    this._fillManualUcGenerationTableDynamically();
                 }
                 catch (error) { MessageToast.show(`Erro ao criar registros: ${error}`); }
             }
