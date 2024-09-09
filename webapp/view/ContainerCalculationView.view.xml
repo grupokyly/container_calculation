@@ -53,7 +53,7 @@
                             <content>
                                 <Table id="box_capacity_table" items="{ path: 'cadCaixasModel>/' }" inset="false">
                                     <columns>
-                                        <Column id="column_caixa" hAlign="Center">
+                                        <Column id="box_capacity_table_column_caixa" hAlign="Center">
                                             <Text text="Caixa" />
                                         </Column>
                                     </columns>
@@ -152,7 +152,7 @@
                             <content>
                                 <Table id="quantity_check_table" inset="false">
                                     <columns>
-                                        <Column id="column_quantity_check_item" />
+                                        <Column id="quantity_check_table_column_quantity_check_item" />
                                     </columns>
                                 </Table>
                             </content>
