@@ -33,7 +33,7 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
-                        $select: 'MasterProductionOrder,Material,to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/Box,to_Boxes/BoxDescription,to_Boxes/Quantity'
+                        $select: 'MasterProductionOrder,GenericMaterial,to_Boxes/Material,to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/Box,to_Boxes/BoxDescription,to_Boxes/Quantity'
                     },
 
                     success: function (data) {
@@ -44,8 +44,9 @@ sap.ui.define([
 
                         view.setModel(new JSONModel({
                             MasterProductionOrder: data.results[0]?.MasterProductionOrder,
-                            Material: data.results[0]?.Material,
+                            Material: data.results[0]?.GenericMaterial,
                             Boxes: data.results[0]?.to_Boxes?.results?.map(box => { return {
+                                Material: box.Material,
                                 MaterialSize: box.MaterialSize,
                                 SizeOrder: box.SizeOrder,
                                 Box: box.Box,
@@ -68,14 +69,14 @@ sap.ui.define([
                 const view = this.getView();
                 const data = view.getModel('masterOrderData').getData();
                 const table = view.byId('box_capacity_table');
-                const sizes = data.Boxes?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize);
+                const sizes = [...new Set(data.Boxes?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize))];
                 if (!sizes || sizes.length === 0) {
                     MessageToast.show('Não foram encontradas caixas para a ordem mestre informada.');
                     return;
                 }
 
                 table.getColumns().forEach((column) => {
-                    if (!column.getId().includes('size')) return;
+                    if (!column.getId().includes('_size_')) return;
                     column.destroy();
                 });
 
@@ -118,14 +119,14 @@ sap.ui.define([
                 const view = this.getView();
                 const data = view.getModel('masterOrderData').getData();
                 const table = view.byId('manual_uc_generation_table');
-                const sizes = data.Boxes?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize);
+                const sizes = [...new Set(data.Boxes?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize))];
                 if (!sizes || sizes.length === 0) {
                     MessageToast.show('Não foram encontradas caixas para a ordem mestre informada.');
                     return;
                 }
 
                 table.getColumns().forEach((column) => {
-                    if (!column.getId().includes('size')) return;
+                    if (!column.getId().includes('_size_')) return;
                     column.destroy();
                 });
 
@@ -182,23 +183,38 @@ sap.ui.define([
                 const model = view.getModel('getHandlingUnitsService');
                 const masterOrderData = view.getModel('masterOrderData')?.getData();
 
+                view.setModel(new JSONModel([]), 'ucManualModel');
                 model.read('/HandlingUnit', {
                     urlParameters: {
-                        $filter: `ZZ1_OrdemMestre_HUH eq '${masterOrderData.MasterProductionOrder.trim()}' and PackagingMaterial eq '${masterOrderData.Material.trim()}'`,
+                        $filter: `ZZ1_OrdemMestre_HUH eq '${masterOrderData.MasterProductionOrder.trim()}'`,
                         $expand: 'to_HandlingUnitItem',
-                        $select: 'HandlingUnitExternalID,to_HandlingUnitItem/Material,to_HandlingUnitItem/HandlingUnitQuantity',
-                        $orderby: 'HandlingUnitExternalID desc'
+                        $select: 'HandlingUnitExternalID,PackagingMaterial,to_HandlingUnitItem/Material,to_HandlingUnitItem/HandlingUnitQuantity',
+                        $orderby: 'HandlingUnitExternalID asc'
                     },
 
                     success: function (data) {
-                        const rows = [];
-                        data.results.forEach(it => {
-                            const newRow = { UnitsPerBox: 0, RecordSelected: false, RowIsNew: false, Box: it.Material, HandlingUnitExternalID: it.HandlingUnitExternalID };
-                            const size = masterOrderData.Boxes[sizesIndex++]?.MaterialSize;
-                            newRow[`UcManualGenerationSize_${size}`] = it.HandlingUnitQuantity;
-                            newRow[`UcManualGenerationSizeOrder_${size}`] = masterOrderData.Boxes.find((box) => box.MaterialSize === size)?.SizeOrder;
-                            rows.push(newRow);
+                        if (data.results.length === 0) return;
+                        const masterOrderData = view.getModel('masterOrderData').getData();
+
+                        const boxes = [...new Set(data.results.map(it => it.PackagingMaterial))];
+                        const rows = boxes.map((box) => {
+                            const row = {
+                                UnitsPerBox: data.results.find(it => it.PackagingMaterial === box).to_HandlingUnitItem.results[0].HandlingUnitQuantity,
+                                RecordSelected: false,
+                                RowIsNew: false,
+                                Box: box,
+                                HandlingUnitExternalIDs: data.results.filter(it => it.PackagingMaterial === box)?.map(it => it.HandlingUnitExternalID)
+                            };
+                            
+                            const sizes = [...new Set(masterOrderData.Boxes.filter(it => it.Box === box).map(it => it.MaterialSize))];
+                            sizes.forEach((size) => {
+                                const material = masterOrderData.Boxes.find(it => it.Box === box && it.MaterialSize === size)?.Material;
+                                row[`UcManualGenerationSize_${size}`] = data.results.filter(it => it.PackagingMaterial === box && it.to_HandlingUnitItem.results[0].Material === material).length
+                            });
+
+                            return row;
                         });
+
                         view.setModel(new JSONModel(rows), 'ucManualModel');
                     }
                 });
@@ -216,7 +232,6 @@ sap.ui.define([
                 const newRow = { UnitsPerBox: 0, RecordSelected: false, RowIsNew: true };
                 sizes.forEach(it => {
                     newRow[`UcManualGenerationSize_${it}`] = '0'
-                    newRow[`UcManualGenerationSizeOrder_${it}`] = data.Boxes?.find((box) => box.MaterialSize === it)?.SizeOrder;
                 });
 
                 const ucManualModel = view.getModel('ucManualModel').getData();
@@ -227,36 +242,40 @@ sap.ui.define([
                 const view = this.getView();
                 const rows = view.getModel('ucManualModel')?.getData();
                 if (!rows || !Array.isArray(rows)) return;
-                rows.filter(row => row.RecordSelected && !row.RowIsNew && row.HandlingUnitExternalID).forEach(async (row) => {
-                    try {
-                        await fetch('/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/HandlingUnitSet', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json; charset=UTF-8',
-                                'Accept': 'application/json',
-                                'X-REQUESTED-WITH': 'XMLHttpRequest',
-                            },
-                            body: JSON.stringify({
-                                HandlingUnitExternalID: row.HandlingUnitExternalID.trim(),
-                                HandlingUnitDelete: 'X',
-                                Return_Messages: []
-                            })
-                        }).then(response => response.json()).then(data => {
-                            if (data.d.Return_Messages.results.length > 0) {
-                                throw data.d.Return_Messages.results.map(it => it.Message.trim()).join('\n');
-                            }
-                        });
-                    }
-                    catch (error) { MessageToast.show(`Erro ao excluir registros: ${error}`); }
+                
+                rows.filter(row => row.RecordSelected && !row.RowIsNew && row.HandlingUnitExternalIDs).forEach(async (row) => {
+                    row.HandlingUnitExternalIDs.forEach(async (it) => {
+                        try {
+                            await fetch('/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/HandlingUnitSet', {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    HandlingUnitExternalID: it.trim(),
+                                    HandlingUnitDelete: 'X',
+                                    Return_Messages: []
+                                }),
+                                headers: {
+                                    'Content-Type': 'application/json; charset=UTF-8',
+                                    'Accept': 'application/json',
+                                    'X-REQUESTED-WITH': 'XMLHttpRequest'
+                                }
+                            }).then(response => response.json()).then(data => {
+                                if (data.d.Return_Messages.results.length > 0) {
+                                    throw data.d.Return_Messages.results.map(it => it.Message.trim()).join('\n');
+                                }
+                            });
+                        } catch {}
+                    });
                 });
-                view.setModel(new JSONModel(rows.filter(it => !it.RecordSelected)), 'ucManualModel');
+
+                MessageToast.show('Registros excluídos com sucesso!');
+                this._fillManualUcGenerationTableDynamically();
             },
 
             _buildQuantityCheckTableDynamically: function () {
                 const view = this.getView();
                 const data = view.getModel('masterOrderData').getData();
                 const table = view.byId('quantity_check_table');
-                const sizes = data.Boxes?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize);
+                const sizes = [...new Set(data.Boxes?.sort((a, b) => Number(a.SizeOrder) - Number(b.SizeOrder))?.map((box) => box.MaterialSize))];
                 if (!sizes || sizes.length === 0) {
                     MessageToast.show('Não foram encontradas caixas para a ordem mestre informada.');
                     return;
@@ -303,59 +322,52 @@ sap.ui.define([
 
             _runManualUcGeneration: async function () {
                 const view = this.getView();
-                const model = view.getModel('createHandlingUnitsService');
                 const data = view.getModel('masterOrderData')?.getData();
                 const rows = view.getModel('ucManualModel')?.getData();
                 if (!data || !rows || rows.length === 0) return;
 
-                const payloads = [];
                 rows.filter(row => row.RowIsNew).forEach(row => {
-                    const payload = ({
-                        HandlingUnitExternalID: '$1', // Fixed
-                        ZZ1_QuantidadeIdeal_HUH: `${row.UnitsPerBox}`,
-                        PackagingMaterial: data.Material.trim(),
-                        ZZ1_OrdemMestre_HUH: data.MasterProductionOrder.trim(),
-                        HandlingUnitItems: [],
-                        HuHeader_Response: [],
-                        HuItem_Response: [],
-                        Return_Messages: []
-                    });
-
                     Object.getOwnPropertyNames(row).filter(it => it.includes('UcManualGenerationSize_')).forEach(it => {
-                        payload.HandlingUnitItems.push({
-                            HandlingUnitExternalID: '$1',
-                            Material: row.Box?.trim(),
-                            Plant: '1000', // Fixed
-                            HandlingUnitQuantity: row[it],
-                            _sequence: row[`UcManualGenerationSizeOrder_${it.replace('UcManualGenerationSize_', '').trim()}`],
+                        if (row[it] === '0') return;
+                        
+                        const size = it.replace('UcManualGenerationSize_', '').trim();
+                        const payload = ({
+                            HandlingUnitExternalID: '$1', // Fixed
+                            PackagingMaterial: data.Boxes.find((box) => box.Box === row.Box && box.MaterialSize === size)?.Box.trim(),
+                            ZZ1_OrdemMestre_HUH: data.MasterProductionOrder.trim(),
+                            HuHeader_Response: [], // Fixed
+                            HuItem_Response: [], // Fixed
+                            Return_Messages: [], // Fixed
+                            HandlingUnitItems: [{
+                                HandlingUnitExternalID: '$1', // Fixed
+                                Material: data.Boxes.find((box) => box.Box === row.Box && box.MaterialSize === size)?.Material.trim(),
+                                Plant: '1000', // Fixed
+                                HandlingUnitQuantity: row.UnitsPerBox
+                            }]
                         });
+
+                        Array.from({ length: row[it] }, (_, i) => i + 1).forEach(async () => {
+                            try {
+                                await fetch('/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/HandlingUnitSet', {
+                                    method: 'POST',
+                                    body: JSON.stringify(payload),
+                                    headers: {
+                                        'Content-Type': 'application/json; charset=UTF-8',
+                                        'Accept': 'application/json',
+                                        'X-REQUESTED-WITH': 'XMLHttpRequest'
+                                    }
+                                }).then(response => response.json()).then(data => {
+                                    if (data.d.Return_Messages.results.length > 0) {
+                                        throw data.d.Return_Messages.results.map(it => it.Message.trim()).join('\n');
+                                    }
+                                });
+                            } catch (error) { MessageToast.show(`Erro ao criar registros: ${error}`); }
+                        });
+
+                        this._fillManualUcGenerationTableDynamically();
+                        MessageToast.show('Registros criados com sucesso!');
                     });
-
-                    payloads.push(payload);
                 });
-
-                try {
-                    for (const payload of payloads) {
-                        payload.HandlingUnitItems = payload.HandlingUnitItems.sort((a, b) => Number(a._sequence) - Number(b._sequence)).map(it => { delete it._sequence; return it; });
-                        await fetch('/sap/opu/odata/sap/ZAPI_HU_MAINTAIN_SRV/HandlingUnitSet', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json; charset=UTF-8',
-                                'Accept': 'application/json',
-                                'X-REQUESTED-WITH': 'XMLHttpRequest',
-                            },
-                            body: JSON.stringify(payload)
-                        }).then(response => response.json()).then(data => {
-                            if (data.d.Return_Messages.results.length > 0) {
-                                throw data.d.Return_Messages.results.map(it => it.Message.trim()).join('\n');
-                            }
-                        });
-                    }
-
-                    MessageToast.show('Registros criados com sucesso!');
-                    this._fillManualUcGenerationTableDynamically();
-                }
-                catch (error) { MessageToast.show(`Erro ao criar registros: ${error}`); }
             }
         });
     });
