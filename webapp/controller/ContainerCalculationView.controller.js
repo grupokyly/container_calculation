@@ -33,7 +33,7 @@ sap.ui.define([
                     urlParameters: {
                         $filter: `MasterProductionOrder eq '${masterOrder.trim()}'`,
                         $expand: 'to_Boxes',
-                        $select: 'MasterProductionOrder,GenericMaterial,to_Boxes/Material,to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/Box,to_Boxes/BoxDescription,to_Boxes/Quantity'
+                        $select: 'MasterProductionOrder,GenericMaterial,to_Boxes/ProductionOrder,to_Boxes/Material,to_Boxes/MaterialSize,to_Boxes/SizeOrder,to_Boxes/Box,to_Boxes/BoxDescription,to_Boxes/Quantity'
                     },
 
                     success: function (data) {
@@ -46,6 +46,7 @@ sap.ui.define([
                             MasterProductionOrder: data.results[0]?.MasterProductionOrder,
                             Material: data.results[0]?.GenericMaterial,
                             Boxes: data.results[0]?.to_Boxes?.results?.map(box => { return {
+                                ProductionOrder: box.ProductionOrder,
                                 Material: box.Material,
                                 MaterialSize: box.MaterialSize,
                                 SizeOrder: box.SizeOrder,
@@ -329,12 +330,13 @@ sap.ui.define([
                 rows.filter(row => row.RowIsNew).forEach(row => {
                     Object.getOwnPropertyNames(row).filter(it => it.includes('UcManualGenerationSize_')).forEach(it => {
                         if (row[it] === '0') return;
-                        
+
                         const size = it.replace('UcManualGenerationSize_', '').trim();
                         const payload = ({
                             HandlingUnitExternalID: '$1', // Fixed
                             PackagingMaterial: data.Boxes.find((box) => box.Box === row.Box && box.MaterialSize === size)?.Box.trim(),
                             ZZ1_OrdemMestre_HUH: data.MasterProductionOrder.trim(),
+                            ZZ1_OrdemdeProduo_HUH: data.Boxes.find((box) => box.Box === row.Box && box.MaterialSize === size)?.ProductionOrder?.trim(),
                             HuHeader_Response: [], // Fixed
                             HuItem_Response: [], // Fixed
                             Return_Messages: [], // Fixed
@@ -363,11 +365,11 @@ sap.ui.define([
                                 });
                             } catch (error) { MessageToast.show(`Erro ao criar registros: ${error}`); }
                         });
-
-                        this._fillManualUcGenerationTableDynamically();
-                        MessageToast.show('Registros criados com sucesso!');
                     });
                 });
+
+                this._fillManualUcGenerationTableDynamically();
+                MessageToast.show('Registros criados com sucesso!');
             }
         });
     });
